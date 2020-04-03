@@ -6,6 +6,7 @@ package com.lp.leetcodeLp.solution;
 public class UniquePathsWithObstacles {
 
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+
         return 0;
     }
 }
