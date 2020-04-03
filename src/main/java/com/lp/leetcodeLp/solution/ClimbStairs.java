@@ -1,6 +1,12 @@
 package com.lp.leetcodeLp.solution;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ClimbStairs {
+
+    static Map<Integer, Integer> recored  = new HashMap<>();
+
     public static int climbStairs(int n) {
         if( n ==1 ){
             return 1;
@@ -8,7 +14,13 @@ public class ClimbStairs {
         if (n ==2 ){
             return 2;
         }
-        return climbStairs(n-1) + climbStairs(n-2);
+        Integer old = recored.get(n);
+        if (old != null){
+            return old;
+        }
+        int result = climbStairs(n-1) + climbStairs(n-2);
+        recored.put(n,result);
+        return result;
     }
 
     public static void main(String args[]){
