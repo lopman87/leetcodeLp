@@ -23,9 +23,13 @@ public class LongestPalindrome {
             }
         }
         Set<String> result = new HashSet<>();
-        for (int i = 1; i < s.length()-1 ; i++) {
-            String tmp = buildPal(i,i,i,s);
+        for (int i = 0; i < s.length()-1 ; i++) {
+            String tmp = buildPal(i-1,i+1,s);
             result.add(tmp);
+            if (s.charAt(i) == s.charAt(i+1)){
+                String tmp2 = buildPal(i-1,i+2,s);
+                result.add(tmp2);
+            }
         }
 
         System.out.println(result);
@@ -38,36 +42,24 @@ public class LongestPalindrome {
         return rest;
     }
 
-    private static String buildPal(int leftOffset, int rightOffset , int index , String target) {
+    private static String buildPal(int leftOffset, int rightOffset ,  String target) {
         if (leftOffset < 0 ){
-            return target.substring(0, rightOffset > target.length() - 1 ? target.length() - 1 : rightOffset);
+            return target.substring(0, rightOffset >= target.length()  ? target.length()  : rightOffset);
         }
         if ( rightOffset > target.length() - 1){
             return target.substring(leftOffset+1);
         }
 
-        if ( isPal(target.substring(leftOffset, rightOffset+1)) ){
-            buildPal(--leftOffset, ++rightOffset , index, target);
+        if (target.charAt(leftOffset) == target.charAt(rightOffset)){
+            return buildPal(--leftOffset, ++rightOffset , target);
         }
-        return "";
-    }
-
-    private static boolean isPal(String tmp){
-        int flag = tmp.length()/2;
-        int index = 0;
-        while (index < flag){
-            if ( tmp.charAt(index) != tmp.charAt(tmp.length() - 1 - index) ){
-                break;
-            }
-            index ++;
-        }
-        return index == flag;
+        return target.substring(++leftOffset, rightOffset);
     }
 
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        System.out.println(longestPalindrome("ccdd"));
+        System.out.println(longestPalindrome("babad"));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
