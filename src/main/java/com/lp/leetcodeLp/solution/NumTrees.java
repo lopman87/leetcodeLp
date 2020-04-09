@@ -26,10 +26,58 @@ public class NumTrees {
     }
 
     private static int doNumTrees(int n){
-        for (int i = 1; i < n+1; i++) {
-            //选中根节点
-        }
+
+
         return 0;
+    }
+
+    private void buildTree(Node root, int newVal){
+        if (root.getCurrentVal() == newVal){
+            return;
+        }
+
+
+        if (root.getCurrentVal() > newVal){
+            buildTree(root.getLeftNode() , newVal);
+        }else{
+            buildTree(root.getRightNode() , newVal);
+        }
+    }
+
+
+    private static class Node{
+        int currentVal;
+        Node leftNode;
+        Node rightNode;
+
+        public int getCurrentVal() {
+            return currentVal;
+        }
+
+        public void setCurrentVal(int currentVal) {
+            this.currentVal = currentVal;
+        }
+
+        public Node getLeftNode() {
+            return leftNode;
+        }
+
+        public void setLeftNode(Node leftNode) {
+            this.leftNode = leftNode;
+        }
+
+        public Node getRightNode() {
+            return rightNode;
+        }
+
+        public void setRightNode(Node rightNode) {
+            this.rightNode = rightNode;
+        }
+        public Node(int currentVal,Node leftNode,Node rightNode){
+            this.setCurrentVal(currentVal);
+            this.setLeftNode(leftNode);
+            this.setRightNode(rightNode);
+        }
     }
 
 
