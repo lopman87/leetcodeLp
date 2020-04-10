@@ -35,13 +35,34 @@ public class NumTrees {
         if (root.getCurrentVal() == newVal){
             return;
         }
-
-
         if (root.getCurrentVal() > newVal){
-            buildTree(root.getLeftNode() , newVal);
+            if (root.getLeftNode() == null){
+                Node tmp = new Node(newVal);
+                root.setLeftNode(tmp);
+            }else{
+                buildTree(root.getLeftNode() , newVal);
+            }
         }else{
-            buildTree(root.getRightNode() , newVal);
+            if (root.getRightNode() == null){
+                Node tmp = new Node(newVal);
+                root.setRightNode(tmp);
+            }else{
+                buildTree(root.getRightNode() , newVal);
+            }
         }
+    }
+
+    private void visitNode(Node root, StringBuilder sb){
+        if (root == null){
+        }
+        if (root.getLeftNode() != null){
+            visitNode(root.getLeftNode(),sb);
+        }
+        String current = root.getCurrentVal()+"";
+        if (root.getRightNode() != null){
+            visitNode(root.getRightNode(),sb);
+        }
+        sb.append(current);
     }
 
 
@@ -77,6 +98,10 @@ public class NumTrees {
             this.setCurrentVal(currentVal);
             this.setLeftNode(leftNode);
             this.setRightNode(rightNode);
+        }
+
+        public Node(int currentVal){
+            this.setCurrentVal(currentVal);
         }
     }
 
