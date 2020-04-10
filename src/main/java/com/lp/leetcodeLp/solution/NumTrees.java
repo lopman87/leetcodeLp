@@ -11,18 +11,15 @@ import java.util.Map;
  */
 public class NumTrees {
 
-    static Map<Integer ,Integer> tmp= new HashMap<>();
 
     public static int numTrees(int n) {
-        if (n <= 1){
+        if (n <= 2){
             return n;
         }
-        if (tmp.containsKey(n)){
-            return tmp.get(n);
+        if (n == 3){
+            return 5;
         }
-        int res = doNumTrees(n);
-        tmp.put(n,res);
-        return res;
+        return doNumTrees(n);
     }
 
     private static int doNumTrees(int n){
