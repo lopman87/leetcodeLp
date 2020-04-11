@@ -13,7 +13,7 @@ public class NumTrees {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         NumTrees numTrees = new NumTrees();
-        System.out.println(numTrees.numTrees(4));
+        System.out.println(numTrees.numTrees(10));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
@@ -21,9 +21,6 @@ public class NumTrees {
     public int numTrees(int n) {
         if (n <= 2){
             return n;
-        }
-        if (n == 3){
-            return 5;
         }
         return doNumTrees(n);
     }
