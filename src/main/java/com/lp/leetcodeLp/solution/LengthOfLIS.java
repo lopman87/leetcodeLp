@@ -26,9 +26,9 @@ public class LengthOfLIS {
 
     public void doLengthOfLIS(int flag , int index, int[] nums, List<Integer> tmp) {
         for (int i = index; i < nums.length; i++) {
-            if (flag < nums[index]){
-                tmp.add(nums[index]);
-                doLengthOfLIS(nums[index] , index +1 , nums,tmp);
+            if ( nums[i] > flag){
+                tmp.add(nums[i]);
+                doLengthOfLIS(nums[i] , i +1 , nums,tmp);
             }
         }
     }
