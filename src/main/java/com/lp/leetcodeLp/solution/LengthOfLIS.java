@@ -1,5 +1,8 @@
 package com.lp.leetcodeLp.solution;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * https://leetcode-cn.com/problems/longest-increasing-subsequence/
  *
@@ -11,8 +14,23 @@ package com.lp.leetcodeLp.solution;
 public class LengthOfLIS {
 
     public int lengthOfLIS(int[] nums) {
-
+        List<List<Integer>> tmpAll = new ArrayList<>();
+        for (int i = 0; i < nums.length-1; i++) {
+            List<Integer> tmp = new ArrayList<>();
+            doLengthOfLIS(nums[i] , i + 1 , nums, tmp);
+            tmpAll.add(tmp);
+        }
+        System.out.println(tmpAll);
         return 0;
+    }
+
+    public void doLengthOfLIS(int flag , int index, int[] nums, List<Integer> tmp) {
+        for (int i = index; i < nums.length; i++) {
+            if (flag < nums[index]){
+                tmp.add(nums[index]);
+                doLengthOfLIS(nums[index] , index +1 , nums,tmp);
+            }
+        }
     }
 
     public static void main(String args[]){
