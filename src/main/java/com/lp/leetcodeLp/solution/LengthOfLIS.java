@@ -17,7 +17,8 @@ public class LengthOfLIS {
         List<List<Integer>> tmpAll = new ArrayList<>();
         for (int i = 0; i < nums.length-1; i++) {
             List<Integer> tmp = new ArrayList<>();
-            doLengthOfLIS(nums[i] , i + 1 , nums, tmp);
+            tmp.add(nums[i]);
+            doLengthOfLIS(nums[i] , i  , nums, tmp);
             tmpAll.add(tmp);
         }
         System.out.println(tmpAll);
@@ -25,10 +26,13 @@ public class LengthOfLIS {
     }
 
     public void doLengthOfLIS(int flag , int index, int[] nums, List<Integer> tmp) {
-        for (int i = index; i < nums.length; i++) {
-            if ( nums[i] > flag){
+        int tmpFlag = flag;
+        for (int i = index + 1; i < nums.length; i++) {
+            if ( nums[i] > tmpFlag){
                 tmp.add(nums[i]);
-                doLengthOfLIS(nums[i] , i +1 , nums,tmp);
+                tmpFlag = nums[i];
+            }else{
+
             }
         }
     }
