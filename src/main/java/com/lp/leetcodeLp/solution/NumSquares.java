@@ -25,34 +25,35 @@ import java.util.Map;
  *
  */
 public class NumSquares {
-    static Map<Integer , Integer> tmp = new HashMap<>();
-    static {
-        tmp.put(1,1);
-    }
+
+
     public int numSquares(int n) {
-        if (tmp.containsKey(n)){
-            return tmp.get(n);
-        }
-        return 0;
-    }
-
-
-    
-
-    /**
-     * 获取小于N的所有完全平方数
-     * @param num
-     * @return
-     */
-    private List<Integer> getAllSquare(int num){
-        List<Integer> tmp = new ArrayList<>();
-        for (int i = 1; i <= num; i++) {
+        int[] tmpArray = new int[n+1];
+        tmpArray[0] = 0;
+        tmpArray[1] = 1;
+        for (int i = 1; i <= n; i++) {
             if (isPerfectSquare(i)){
-                tmp.add(i);
+                tmpArray[i] = 1;
+                continue;
             }
+            int val = i;
+            for (int j=1;j*j<=i;j++) {
+                val = Math.min(val, tmpArray[i - j * j] + 1);
+            }
+            tmpArray[i] = val;
         }
-        return tmp;
+        return tmpArray[n];
     }
+
+    public static void main(String args[]){
+        long start = System.currentTimeMillis();
+        NumSquares numTrees = new NumSquares();
+        System.out.println(numTrees.numSquares(12));
+        long end = System.currentTimeMillis();
+        System.out.println("cost:"+(end - start) );
+    }
+
+
 
     private boolean isPerfectSquare(int num) {
         int i = 1;
