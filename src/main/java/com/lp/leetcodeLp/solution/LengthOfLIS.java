@@ -14,25 +14,33 @@ import java.util.List;
 public class LengthOfLIS {
 
     public int lengthOfLIS(int[] nums) {
+
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        if (nums.length == 1){
+            return 1;
+        }
+
         List<List<Integer>> tmpAll = new ArrayList<>();
         for (int i = 0; i < nums.length-1; i++) {
-            List<Integer> tmp = new ArrayList<>();
-            tmp.add(nums[i]);
-            doLengthOfLIS(nums[i] , i  , nums, tmp);
-            tmpAll.add(tmp);
+            List<Integer> tmpArr = new ArrayList<>();
+            tmpArr.add(nums[i] );
+            doLengthOfLIS(nums[i] , i  , nums,tmpArr);
+            tmpAll.add(tmpArr);
         }
         System.out.println(tmpAll);
         return 0;
     }
 
-    public void doLengthOfLIS(int flag , int index, int[] nums, List<Integer> tmp) {
+    public void doLengthOfLIS(int flag , int index, int[] nums ,List<Integer> res) {
         int tmpFlag = flag;
         for (int i = index + 1; i < nums.length; i++) {
             if ( nums[i] > tmpFlag){
-                tmp.add(nums[i]);
                 tmpFlag = nums[i];
+                res.add(nums[i]);
             }else{
-
+                doLengthOfLIS(tmpFlag , ++index,  nums , res);
             }
         }
     }
@@ -40,7 +48,9 @@ public class LengthOfLIS {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         LengthOfLIS numTrees = new LengthOfLIS();
-        int[] A = {10,9,2,5,3,7,101,18};
+        //int[] A = {10,9,2,5,3,7,101,18};
+        int[] A = {10,9,2,5,3,4};
+
         System.out.println(numTrees.lengthOfLIS(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
