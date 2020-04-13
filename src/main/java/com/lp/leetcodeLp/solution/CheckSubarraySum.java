@@ -20,14 +20,15 @@ package com.lp.leetcodeLp.solution;
 public class CheckSubarraySum {
     public boolean checkSubarraySum(int[] nums, int k) {
         for (int i = 0; i < nums.length-1; i++) {
-            int sums = 0;
+            int sums = nums[i];
             for (int j = i+1; j < nums.length; j++) {
-                sums += nums[i] + nums[j];
+                sums +=  nums[j];
                 if (k == 0){
                     if (sums == 0){
                         return true;
                     }else{
-                        return false;
+                        sums = 0;
+                        break;
                     }
                 }else if(sums % k == 0){
                     return true;
