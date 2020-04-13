@@ -23,8 +23,13 @@ public class LengthOfLIS {
             return 1;
         }
         int[] tmpAll = new int[nums.length];
-        for (int i = 0; i < nums.length-1; i++) {
-            
+        for (int i = 0; i < tmpAll.length; i++) {
+            tmpAll[i] = 1;
+        }
+        for (int i = 1; i < nums.length-1; i++) {
+            for (int j = 0; j < i; j++) {
+
+            }
         }
         System.out.println(tmpAll);
         return 0;
