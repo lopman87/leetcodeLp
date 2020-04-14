@@ -43,7 +43,12 @@ public class MaxProduct {
     public int max(int[] nums , int begin , int end){
         int res = 1;
         for (int i = begin; i <= end; i++) {
-            res = nums[i] * res;
+            if (nums[i] == 1){
+                continue;
+            }else {
+                res = nums[i] * res;
+            }
+
         }
         return res;
     }
