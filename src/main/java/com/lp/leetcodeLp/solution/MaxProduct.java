@@ -1,5 +1,9 @@
 package com.lp.leetcodeLp.solution;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * https://leetcode-cn.com/problems/maximum-product-subarray/
  *
@@ -22,13 +26,33 @@ package com.lp.leetcodeLp.solution;
 public class MaxProduct {
 
     public int maxProduct(int[] nums) {
-        return 0;
+        int[] tmp = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            tmp[i] = nums[i];
+            for (int j = 0; j < i; j++) {
+                int flag = max(nums,j,i);
+                if (flag > tmp[i]){
+                    tmp[i] = flag;
+                }
+            }
+        }
+        Arrays.sort(tmp);
+        return tmp[tmp.length-1];
     }
+
+    public int max(int[] nums , int begin , int end){
+        int res = 1;
+        for (int i = begin; i <= end; i++) {
+            res = nums[i] * res;
+        }
+        return res;
+    }
+
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         MaxProduct numTrees = new MaxProduct();
-        int[] A = {5,0,0};
+        int[] A = {-3,2,-4};
         System.out.println(numTrees.maxProduct(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
