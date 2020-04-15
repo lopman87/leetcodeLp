@@ -33,11 +33,11 @@ public class LRUCache extends java.util.LinkedHashMap {
     }
 
     public int get(int key) {
-        if (super.containsKey(key)){
-            return (Integer) super.get(key);
-        }else{
+        Object res = super.get(key);
+        if (res == null){
             return -1;
         }
+        return (Integer)res;
     }
 
     public void put(int key, int value) {
@@ -51,7 +51,7 @@ public class LRUCache extends java.util.LinkedHashMap {
      * @param args
      */
     public static void main(String[] args){
-        LRUCache cache = new LRUCache( 10 );
+        LRUCache cache = new LRUCache( 2 );
 
         cache.put(1, 1);
         cache.put(2, 2);
