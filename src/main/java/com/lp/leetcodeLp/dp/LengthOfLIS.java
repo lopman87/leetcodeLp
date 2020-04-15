@@ -1,8 +1,6 @@
-package com.lp.leetcodeLp.solution;
+package com.lp.leetcodeLp.dp;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * https://leetcode-cn.com/problems/longest-increasing-subsequence/

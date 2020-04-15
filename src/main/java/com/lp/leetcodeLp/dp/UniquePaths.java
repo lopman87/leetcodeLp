@@ -1,4 +1,4 @@
-package com.lp.leetcodeLp.solution;
+package com.lp.leetcodeLp.dp;
 
 /**
  * https://leetcode-cn.com/problems/unique-paths/

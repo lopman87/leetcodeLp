@@ -1,9 +1,4 @@
-package com.lp.leetcodeLp.solution;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package com.lp.leetcodeLp.dp;
 
 /**
  * https://leetcode-cn.com/problems/perfect-squares/

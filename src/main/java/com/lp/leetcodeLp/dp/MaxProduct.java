@@ -1,8 +1,4 @@
-package com.lp.leetcodeLp.solution;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+package com.lp.leetcodeLp.dp;
 
 /**
  * https://leetcode-cn.com/problems/maximum-product-subarray/

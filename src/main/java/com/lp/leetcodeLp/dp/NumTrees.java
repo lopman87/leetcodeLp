@@ -1,4 +1,4 @@
-package com.lp.leetcodeLp.solution;
+package com.lp.leetcodeLp.dp;
 
 import java.util.*;
 

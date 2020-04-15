@@ -1,4 +1,4 @@
-package com.lp.leetcodeLp.solution;
+package com.lp.leetcodeLp.dp;
 
 public class NumTrees3 {
     public int numTrees(int n) {
