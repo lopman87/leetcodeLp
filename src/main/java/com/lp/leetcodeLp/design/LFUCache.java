@@ -20,7 +20,7 @@ public class LFUCache extends java.util.LinkedHashMap {
     private int size = 0;
 
     public LFUCache(int capacity) {
-        super(capacity,0.75f,false);
+        super(capacity,0.75f,true);
         this.capacity = capacity;
     }
 
@@ -33,18 +33,34 @@ public class LFUCache extends java.util.LinkedHashMap {
     }
 
     public void put(int key, int value) {
-        if (super.containsKey(key)){
+        if (super.get(key) != null){
             super.replace(key,value);
         }else{
             ++size;
             super.put(key,value);
         }
     }
-    public static void main(String[] args){
-        LFUCache cache = new LFUCache( 10 );
 
-        cache.put(10,13);
-        cache.put(3,17);cache.put(6,11);cache.put(10,5);cache.put(9,10);
-        System.out.println(cache.get(13));
+    /**
+     * ["LFUCache","put","put","get","get","get","put","put","get","get","get","get"]
+     * [[3],[2,2],[1,1],[2],[1],[2],[3,3],[4,4],[3],[2],[1],[4]]
+     *
+     * [null,null,null,2,1,2,null,null,-1,2,1,4]
+     * @param args
+     */
+    public static void main(String[] args){
+        LFUCache cache = new LFUCache( 3 );
+
+        cache.put(2,2);
+        cache.put(1,1);
+        System.out.println(cache.get(2));
+        System.out.println(cache.get(1));
+        System.out.println(cache.get(2));
+        cache.put(3,3);
+        cache.put(4,4);
+        System.out.println(cache.get(3));
+        System.out.println(cache.get(2));
+        System.out.println(cache.get(1));
+        System.out.println(cache.get(4));
     }
 }
