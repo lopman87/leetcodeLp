@@ -1,5 +1,9 @@
 package com.lp.leetcodeLp.design;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 /**
  * https://leetcode-cn.com/problems/lfu-cache/
  *
@@ -10,57 +14,112 @@ package com.lp.leetcodeLp.design;
  * 「项的使用次数」就是自插入该项以来对其调用 get 和 put 函数的次数之和。使用次数会在对应项被移除后置为 0 。
  *
  */
-public class LFUCache extends java.util.LinkedHashMap {
-    @Override
-    public boolean removeEldestEntry(java.util.Map.Entry eldest) {
-        return size > capacity;
-    }
+public class LFUCache {
     private int capacity = 0;
 
     private int size = 0;
 
+    private HashMap<Integer,Node> valMap ;
+
     public LFUCache(int capacity) {
-        super(capacity,0.75f,true);
         this.capacity = capacity;
+        valMap = new HashMap<>(capacity);
     }
 
     public int get(int key) {
-        Object res = super.get(key);
-        if (res == null){
+        if (capacity <= 0){
             return -1;
         }
-        return (Integer)res;
+        if (valMap.containsKey(key)){
+            Node tmp = valMap.get(key);
+            Node newTmp = new Node(tmp.getValue() , tmp.getFrequency()+1, key);
+            valMap.replace(key,tmp,newTmp);
+            return tmp.getValue();
+        }
+        return -1;
     }
 
     public void put(int key, int value) {
-        if (super.get(key) != null){
-            super.replace(key,value);
+        if (capacity <= 0){
+            return ;
+        }
+        if (valMap.containsKey(key)){
+            Node tmp = valMap.get(key);
+            Node newTmp = new Node(value , tmp.getFrequency()+1, key);
+            valMap.replace(key,tmp,newTmp);
         }else{
-            ++size;
-            super.put(key,value);
+            if (size >= capacity){
+                Node minFreq = findMinfrequency();
+                valMap.remove(minFreq.getKey());
+                Node newTmp = new Node(value , 0, key);
+                valMap.put(key,newTmp);
+            }else {
+                ++size;
+                Node newTmp = new Node(value , 0, key);
+                valMap.put(key,newTmp);
+            }
         }
     }
 
+    private Node findMinfrequency(){
+        Comparator<Node> comparator = Comparator.comparing(Node::getFrequency);
+        return valMap.values().stream().min(comparator).get();
+    }
+
+    private static class Node{
+        int value;
+        int key;
+        int frequency;
+
+        public int getKey() {
+            return key;
+        }
+
+        public void setKey(int key) {
+            this.key = key;
+        }
+
+        public int getFrequency() {
+            return frequency;
+        }
+
+        public void setFrequency(int frequency) {
+            this.frequency = frequency;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+        public Node(int value,int frequency,int key){
+            this.setFrequency(frequency);
+            this.setValue(value);
+            this.setKey(key);
+        }
+    }
+
+
     /**
-     * ["LFUCache","put","put","get","get","get","put","put","get","get","get","get"]
-     * [[3],[2,2],[1,1],[2],[1],[2],[3,3],[4,4],[3],[2],[1],[4]]
+     * ["LFUCache","put","put","get","get","put","get","get","get"]
+     * [[2],[2,1],[3,2],[3],[2],[4,3],[2],[3],[4]]
      *
-     * [null,null,null,2,1,2,null,null,-1,2,1,4]
+     * [null,null,null,2,1,null,1,-1,3]
      * @param args
      */
     public static void main(String[] args){
-        LFUCache cache = new LFUCache( 3 );
 
-        cache.put(2,2);
-        cache.put(1,1);
-        System.out.println(cache.get(2));
-        System.out.println(cache.get(1));
-        System.out.println(cache.get(2));
-        cache.put(3,3);
-        cache.put(4,4);
+        LFUCache cache = new LFUCache( 2 /* capacity (缓存容量) */ );
+
+        cache.put(2,1);
+        cache.put(3,2);
         System.out.println(cache.get(3));
         System.out.println(cache.get(2));
-        System.out.println(cache.get(1));
+        cache.put(4,3);
+        System.out.println(cache.get(2));
+        System.out.println(cache.get(3));
         System.out.println(cache.get(4));
     }
 }
