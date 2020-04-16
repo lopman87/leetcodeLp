@@ -1,8 +1,5 @@
 package com.lp.leetcodeLp.design;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * https://leetcode-cn.com/problems/lfu-cache/
@@ -15,24 +12,32 @@ import java.util.LinkedHashMap;
  *
  */
 public class LFUCache {
+
+
     private int capacity = 0;
 
     private int size = 0;
 
-    private HashMap<Integer,Node> valMap ;
+    private java.util.HashMap<Integer,Node> valMap ;
+
 
     public LFUCache(int capacity) {
         this.capacity = capacity;
-        valMap = new HashMap<>(capacity);
+        valMap = new java.util.HashMap<>(capacity);
     }
 
     public int get(int key) {
         if (capacity <= 0){
             return -1;
         }
+        try {
+            java.util.concurrent.TimeUnit.MILLISECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (valMap.containsKey(key)){
             Node tmp = valMap.get(key);
-            Node newTmp = new Node(tmp.getValue() , tmp.getFrequency()+1, key);
+            Node newTmp = new Node(tmp.getValue() , tmp.getFrequency()+1, key, System.currentTimeMillis());
             valMap.replace(key,tmp,newTmp);
             return tmp.getValue();
         }
@@ -43,33 +48,49 @@ public class LFUCache {
         if (capacity <= 0){
             return ;
         }
-        if (valMap.containsKey(key)){
+        try {
+            java.util.concurrent. TimeUnit.MILLISECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (valMap.containsKey(key)  ){
             Node tmp = valMap.get(key);
-            Node newTmp = new Node(value , tmp.getFrequency()+1, key);
+            Node newTmp = new Node(value , tmp.getFrequency()+1, key,System.currentTimeMillis());
             valMap.replace(key,tmp,newTmp);
         }else{
-            if (size >= capacity){
+            if (size > capacity){
                 Node minFreq = findMinfrequency();
                 valMap.remove(minFreq.getKey());
-                Node newTmp = new Node(value , 0, key);
+                Node newTmp = new Node(value , 0, key, System.currentTimeMillis());
                 valMap.put(key,newTmp);
             }else {
                 ++size;
-                Node newTmp = new Node(value , 0, key);
+                Node newTmp = new Node(value , 0, key, System.currentTimeMillis());
                 valMap.put(key,newTmp);
             }
         }
     }
 
     private Node findMinfrequency(){
-        Comparator<Node> comparator = Comparator.comparing(Node::getFrequency);
-        return valMap.values().stream().min(comparator).get();
+        java.util.Comparator<Node> comparator = java.util.Comparator.comparing(Node::getFrequency);
+        java.util.Comparator<Node> comparatorTime = java.util.Comparator.comparing(Node::getTime);
+        return valMap.values().stream().sorted(comparator).min(comparatorTime).get();
     }
 
     private static class Node{
         int value;
         int key;
         int frequency;
+
+        long time;
+
+        public long getTime() {
+            return time;
+        }
+
+        public void setTime(long time) {
+            this.time = time;
+        }
 
         public int getKey() {
             return key;
@@ -94,10 +115,11 @@ public class LFUCache {
         public void setValue(int value) {
             this.value = value;
         }
-        public Node(int value,int frequency,int key){
+        public Node(int value,int frequency,int key,long time){
             this.setFrequency(frequency);
             this.setValue(value);
             this.setKey(key);
+            this.setTime(time);
         }
     }
 
