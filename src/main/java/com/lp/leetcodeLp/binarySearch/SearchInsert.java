@@ -30,6 +30,29 @@ public class SearchInsert {
 
 
     public int searchInsert(int[] nums, int target) {
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        if (nums.length == 1){
+            if (nums[0] == target){
+                return 0;
+            }else if(nums[0] > target){
+                return 0;
+            }else{
+                return 1;
+            }
+        }
+        if (nums[nums.length/2] == target){
+
+        }else if (nums[nums.length/2] > target){
+
+        }else{
+
+        }
         return 0;
+    }
+
+    private void binarySearch(int[] nums, int target, int left, int right){
+
     }
 }
