@@ -1,6 +1,7 @@
 package com.lp.leetcodeLp.design;
 
 
+
 /**
  * https://leetcode-cn.com/problems/lfu-cache/
  *
@@ -30,14 +31,9 @@ public class LFUCache {
         if (capacity <= 0){
             return -1;
         }
-        try {
-            java.util.concurrent.TimeUnit.MILLISECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if (valMap.containsKey(key)){
             Node tmp = valMap.get(key);
-            Node newTmp = new Node(tmp.getValue() , tmp.getFrequency()+1, key, System.currentTimeMillis());
+            Node newTmp = new Node(tmp.getValue() , tmp.getFrequency()+1, key, System.nanoTime());
             valMap.replace(key,tmp,newTmp);
             return tmp.getValue();
         }
@@ -48,33 +44,28 @@ public class LFUCache {
         if (capacity <= 0){
             return ;
         }
-        try {
-            java.util.concurrent. TimeUnit.MILLISECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if (valMap.containsKey(key)  ){
             Node tmp = valMap.get(key);
-            Node newTmp = new Node(value , tmp.getFrequency()+1, key,System.currentTimeMillis());
+            Node newTmp = new Node(value , tmp.getFrequency()+1, key,System.nanoTime());
             valMap.replace(key,tmp,newTmp);
         }else{
-            if (size > capacity){
+            if (size >= capacity){
                 Node minFreq = findMinfrequency();
                 valMap.remove(minFreq.getKey());
-                Node newTmp = new Node(value , 0, key, System.currentTimeMillis());
+                Node newTmp = new Node(value , 0, key, System.nanoTime());
                 valMap.put(key,newTmp);
             }else {
                 ++size;
-                Node newTmp = new Node(value , 0, key, System.currentTimeMillis());
+                Node newTmp = new Node(value , 0, key, System.nanoTime());
                 valMap.put(key,newTmp);
             }
         }
     }
 
     private Node findMinfrequency(){
-        java.util.Comparator<Node> comparator = java.util.Comparator.comparing(Node::getFrequency);
-        java.util.Comparator<Node> comparatorTime = java.util.Comparator.comparing(Node::getTime);
-        return valMap.values().stream().sorted(comparator).min(comparatorTime).get();
+        java.util.List<Node> nodeList = new java.util.ArrayList<>(valMap.values());
+        nodeList.sort(java.util.Comparator.comparing(Node::getFrequency).thenComparing(Node::getTime));
+        return nodeList.get(0);
     }
 
     private static class Node{
@@ -125,22 +116,26 @@ public class LFUCache {
 
 
     /**
-     * ["LFUCache","put","put","get","get","put","get","get","get"]
-     * [[2],[2,1],[3,2],[3],[2],[4,3],[2],[3],[4]]
+     * ["LFUCache","put","put","get","put","get","get","put","get","get","get"]
+     * [[2],[1,1],[2,2],[1],[3,3],[2],[3],[4,4],[1],[3],[4]]
      *
-     * [null,null,null,2,1,null,1,-1,3]
-     * @param args
+     *
+     * [null,null,null,1,null,-1,3,null,-1,3,4]
+     *
+     *
      */
     public static void main(String[] args){
 
         LFUCache cache = new LFUCache( 2 /* capacity (缓存容量) */ );
 
-        cache.put(2,1);
-        cache.put(3,2);
+        cache.put(1,1);
+        cache.put(2,2);
+        System.out.println(cache.get(1));
+        cache.put(3,3);
+        System.out.println(cache.get(2));
         System.out.println(cache.get(3));
-        System.out.println(cache.get(2));
-        cache.put(4,3);
-        System.out.println(cache.get(2));
+        cache.put(4,4);
+        System.out.println(cache.get(1));
         System.out.println(cache.get(3));
         System.out.println(cache.get(4));
     }
