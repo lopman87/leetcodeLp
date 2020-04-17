@@ -68,7 +68,7 @@ public class LFUCache {
         return nodeList.get(0);
     }
 
-    private static class Node{
+    private static class Node implements Comparable<Node>{
         int value;
         int key;
         int frequency;
@@ -111,6 +111,14 @@ public class LFUCache {
             this.setValue(value);
             this.setKey(key);
             this.setTime(time);
+        }
+
+
+        @Override
+        public int compareTo(Node o) {
+            return java.util.Comparator.comparing(Node::getFrequency)
+                    .thenComparing(Node::getTime)
+                    .compare(this, o);
         }
     }
 
