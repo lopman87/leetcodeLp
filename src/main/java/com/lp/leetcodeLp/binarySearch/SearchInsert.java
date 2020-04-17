@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.binarySearch;
 
+import com.lp.leetcodeLp.design.LFUCache;
+
 /**
  *
  * https://leetcode-cn.com/problems/search-insert-position/
@@ -28,6 +30,12 @@ package com.lp.leetcodeLp.binarySearch;
  */
 public class SearchInsert {
 
+    public static void main(String[] args){
+
+        SearchInsert cache = new SearchInsert();
+        int[] nums = {1,3};
+        System.out.println(cache.searchInsert(nums,4));
+    }
 
     public int searchInsert(int[] nums, int target) {
         if (nums == null || nums.length == 0){
@@ -42,17 +50,29 @@ public class SearchInsert {
                 return 1;
             }
         }
-        if (nums[nums.length/2] == target){
-
-        }else if (nums[nums.length/2] > target){
-
-        }else{
-
-        }
-        return 0;
+        return binarySearch(nums,target ,0,  nums.length-1);
     }
 
-    private void binarySearch(int[] nums, int target, int left, int right){
-
+    private int binarySearch(int[] nums, int target, int left, int right){
+        if (java.lang.Math.abs(right-left)==1){
+            if (nums[left] == target)return left;
+            if (nums[right] == target)return right;
+            if (target < nums[left]){
+                return left;
+            }
+            if (nums[left] < target && target < nums[right]){
+                return right;
+            }
+            if (target > nums[right]){
+                return right+1;
+            }
+        }
+        if (nums[(left+right)/2]==target){
+            return (left+right)/2;
+        }else if (nums[(left+right)/2]>target){
+            return binarySearch(nums,target ,left , (left+right)/2);
+        }else{
+            return binarySearch(nums,target ,(left+right)/2 , right);
+        }
     }
 }
