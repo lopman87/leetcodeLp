@@ -23,6 +23,7 @@ public class CountBits {
         int[] result = new int[num+1];
         for (int i = 0; i <= num; i++) {
             String binaryString = Integer.toBinaryString(i);
+            System.out.println(binaryString);
             long java8 = binaryString.chars().filter(ch -> ch =='1').count();
             result[i] = (int) java8;
         }
@@ -32,7 +33,7 @@ public class CountBits {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         CountBits numTrees = new CountBits();
-        System.out.println(Arrays.toString(numTrees.countBits(5)));
+        System.out.println(Arrays.toString(numTrees.countBits(255)));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
