@@ -23,8 +23,8 @@ public class CountBits {
         int[] result = new int[num+1];
         for (int i = 0; i <= num; i++) {
             String binaryString = Integer.toBinaryString(i);
-            binaryString = binaryString.replace("0","");
-            result[i] = binaryString.length();
+            long java8 = binaryString.chars().filter(ch -> ch =='1').count();
+            result[i] = (int) java8;
         }
         return result;
     }
