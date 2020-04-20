@@ -64,17 +64,15 @@ public class CanPartition {
      *     （1）丢弃num[i]:dp[i][j] = dp[i-1][j];
      *     （2）纳入num[i]:dp[i][j] = j - num[i] > 0 && dp[i-1][j-num[i]]
      */
-    private static boolean dp(int[] nums, int sum) {
-        int n = nums.length;
-        boolean[][] dp = new boolean[n][sum + 1];
-        //初始化左上角
-        dp[0][nums[0]] = true;
-        for (int i = 1; i < n; i++) {
+    private boolean dp(int[] nums, int sum) {
+        boolean[][] dpArray = new boolean[nums.length][sum+1];
+        dpArray[0][nums[0]]= true;
+        for (int i = 1; i < nums.length; i++) {
             for (int j = 1; j <= sum; j++) {
-                dp[i][j] = dp[i - 1][j] || (j - nums[i] > 0 && dp[i - 1][j - nums[i]]);
+                dpArray[i][j] = dpArray[i-1][j] || ((j>nums[i]) && dpArray[i-1][j-nums[i]] );
             }
         }
-        return dp[n - 1][sum];
+        return dpArray[nums.length-1][sum];
     }
 
 
@@ -89,7 +87,7 @@ public class CanPartition {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         CanPartition numTrees = new CanPartition();
-        int[] A = {1,2,3,4,5,6,7};
+        int[] A = {2,2,3,5};
         System.out.println(numTrees.canPartition(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
