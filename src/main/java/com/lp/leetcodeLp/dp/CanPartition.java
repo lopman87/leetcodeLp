@@ -50,18 +50,9 @@ public class CanPartition {
         if (sums % 2 !=0)return false;
         int target = sums / 2;
         Arrays.sort(nums);
-        List<Integer> tmp = new ArrayList<>();
-        cpmputer(nums , tmp, target , 0,0);
-        return false;
+        return dp(nums ,  target );
     }
 
-    private void cpmputer(int[] nums , List<Integer> tmp, int target, int index ,  int flag){
-        for (int num:nums) {
-            for (int i = 1; i <= target; i++) {
-
-            }
-        }
-    }
 
     /** 经典dp
      * @param nums  数组
