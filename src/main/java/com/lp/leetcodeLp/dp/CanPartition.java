@@ -66,16 +66,15 @@ public class CanPartition {
      */
     private static boolean dp(int[] nums, int sum) {
         int n = nums.length;
-        int half = sum >> 1;
-        boolean[][] dp = new boolean[n][half + 1];
+        boolean[][] dp = new boolean[n][sum + 1];
         //初始化左上角
         dp[0][nums[0]] = true;
         for (int i = 1; i < n; i++) {
-            for (int j = 1; j <= half; j++) {
+            for (int j = 1; j <= sum; j++) {
                 dp[i][j] = dp[i - 1][j] || (j - nums[i] > 0 && dp[i - 1][j - nums[i]]);
             }
         }
-        return dp[n - 1][half];
+        return dp[n - 1][sum];
     }
 
 
