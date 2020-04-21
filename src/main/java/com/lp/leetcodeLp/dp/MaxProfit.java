@@ -23,13 +23,38 @@ package com.lp.leetcodeLp.dp;
  */
 public class MaxProfit {
     public int maxProfit(int[] prices) {
-        return 0;
+        if (prices == null || prices.length == 0){
+            return 0;
+        }
+        if (prices.length == 1){
+            return 0;
+        }
+        if (prices.length == 2){
+            if (prices[0] > prices[1])return 0;
+            return prices[1] - prices[0];
+        }
+        int totalMax = 0;
+        for (int i = 1; i < prices.length; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                if (prices[j] > prices[i]){
+                    continue;
+                }else{
+                    int flag = prices[i] - prices[j];
+                    if (flag > max){
+                        max = flag;
+                    }
+                }
+            }
+            totalMax = max > totalMax ? max:totalMax;
+        }
+        return totalMax;
     }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         MaxProfit numTrees = new MaxProfit();
-        int[] A = {7,1,5,3,6,4};
+        int[] A = {7,6,4,3,1};
         System.out.println(numTrees.maxProfit(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
