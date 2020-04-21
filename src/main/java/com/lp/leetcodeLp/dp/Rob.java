@@ -54,6 +54,7 @@ public class Rob {
             int max = Math.max(total[i-2] , total[i-3]);
             total[i] = nums[i] + max;
         }
+        Arrays.sort(total);
         return total[nums.length-1];
     }
 
