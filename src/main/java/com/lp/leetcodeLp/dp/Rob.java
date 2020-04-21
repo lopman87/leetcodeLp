@@ -29,22 +29,36 @@ public class Rob {
      * @return
      */
     public int rob(int[] nums) {
-        if (nums == null || nums.length == 0 || nums.length == 2){
+        if (nums == null || nums.length == 0){
             return 0;
         }
         if (nums.length == 1){
             return nums[0];
         }
-        if (nums.length == 3){
-            return nums[1] > (nums[0] + nums[2]) ? nums[1] : (nums[0] + nums[2]);
+        if (nums.length == 2){
+            return Math.max(nums[1], nums[0]);
         }
-        return 0;
+        if (nums.length == 3){
+            return Math.max(nums[1], nums[0] + nums[2]);
+        }
+        if (nums.length == 4){
+            return Math.max(nums[0] + nums[3], Math.max(nums[0] + nums[2], nums[1] + nums[3]));
+        }
+        int total = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int maxVal = nums[i];
+            for (int j = 0; j < i - 1; j=j+2) {
+                maxVal = maxVal + nums[j];
+            }
+            total = Math.max(total , maxVal);
+        }
+        return total;
     }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         Rob numTrees = new Rob();
-        int[] A = {7,65,4};
+        int[] A = {1,3,1,3,100};
         System.out.println(numTrees.rob(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
