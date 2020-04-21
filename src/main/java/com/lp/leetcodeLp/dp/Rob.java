@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.dp;
 
+import java.util.Arrays;
+
 /**
  * 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
  *
@@ -44,21 +46,21 @@ public class Rob {
         if (nums.length == 4){
             return Math.max(nums[0] + nums[3], Math.max(nums[0] + nums[2], nums[1] + nums[3]));
         }
-        int total = 0;
-        for (int i = 0; i < nums.length; i++) {
-            int maxVal = nums[i];
-            for (int j = 0; j < i - 1; j=j+2) {
-                maxVal = maxVal + nums[j];
-            }
-            total = Math.max(total , maxVal);
+        int[] total = new int[nums.length];
+        total[0] = nums[0];
+        total[1] = nums[1];
+        total[2] = Math.max(nums[1], nums[0] + nums[2]);
+        for (int i = 3; i < nums.length; i++) {
+            int max = Math.max(total[i-2] , total[i-3]);
+            total[i] = nums[i] + max;
         }
-        return total;
+        return total[nums.length-1];
     }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         Rob numTrees = new Rob();
-        int[] A = {1,3,1,3,100};
+        int[] A = {2,7,9,3,1};
         System.out.println(numTrees.rob(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
