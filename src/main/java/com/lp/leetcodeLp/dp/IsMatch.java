@@ -99,8 +99,8 @@ public class IsMatch {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         IsMatch numTrees = new IsMatch();
-        String s = "mississippi";
-        String p = "mis*is*p*.";
+        String s = "ab";
+        String p = ".*";
         System.out.println(numTrees.isMatch(s,p));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
