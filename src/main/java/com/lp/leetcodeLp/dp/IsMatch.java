@@ -53,8 +53,48 @@ package com.lp.leetcodeLp.dp;
 public class IsMatch {
 
     public boolean isMatch(String s, String p) {
-        return false;
+        System.out.println("---->"+isMatch(s,0,p,0));
+        return s.matches(p);
     }
+
+    public boolean isMatch(String s, int sIndex, String p, int pIndex) {
+        if (sIndex >= s.length() || pIndex >= p.length()){
+            if (pIndex >= p.length() && sIndex < s.length()){
+                return false;
+            }else if (sIndex >= s.length() && pIndex < p.length()){
+                return false;
+            }else {
+                return true;
+            }
+        }
+        char pChar = p.charAt(pIndex);
+        char sChar = s.charAt(sIndex);
+        if (pChar == '*'){
+            char perP = p.charAt(pIndex-1);
+            if (perP== '.'){
+                return p.charAt(p.length()-1) == s.charAt(s.length()-1);
+            }else{
+                int ss = findIndex(s,sIndex,perP);
+                return isMatch(s , ss , p , pIndex+1);
+            }
+        }else if (pChar == '.'){
+            return isMatch(s , sIndex+1 , p , pIndex+1);
+        }else{
+            if (pChar == sChar){
+                return isMatch(s , sIndex+1 , p , pIndex+1);
+            }else{
+                return isMatch(s , sIndex , p , pIndex+1);
+            }
+        }
+
+    }
+    private int findIndex(String s, int sIndex,char perP){
+        while ( sIndex < s.length() && s.charAt(sIndex) == perP){
+            sIndex++;
+        }
+        return sIndex;
+    }
+
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
