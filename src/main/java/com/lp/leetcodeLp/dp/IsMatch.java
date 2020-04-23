@@ -53,45 +53,22 @@ package com.lp.leetcodeLp.dp;
 public class IsMatch {
 
     public boolean isMatch(String s, String p) {
-        System.out.println("---->"+isMatch(s,0,p,0));
-        return s.matches(p);
+        if(s==null || p==null)return false;
+        return isMatch(s,0,p,0);
     }
 
     public boolean isMatch(String s, int sIndex, String p, int pIndex) {
-        if (sIndex >= s.length() || pIndex >= p.length()){
-            if (pIndex >= p.length() && sIndex < s.length()){
-                return false;
-            }else if (sIndex >= s.length() && pIndex < p.length()){
-                return false;
-            }else {
-                return true;
-            }
+        if(pIndex>=p.length()) return sIndex==s.length();
+        boolean flag = (sIndex < s.length()) && ((p.charAt(pIndex) == '.') || (p.charAt(pIndex) == s.charAt(sIndex)));
+        if (pIndex+1 < p.length() && '*' == p.charAt(pIndex+1)){
+           //多个p.charAt(pIndex)
+           boolean f0 = flag && isMatch(s , sIndex+1 , p , pIndex );
+           //0个p.charAt(pIndex)
+           boolean f1 = isMatch(s , sIndex , p , pIndex + 2);
+           return f0 || f1;
         }
-        char sChar = s.charAt(sIndex);
-        char pChar = p.charAt(pIndex);
-        if (pChar == '*'){
-            char perP = p.charAt(pIndex-1);
-            int ss = 0;
-            if (perP== '.'){
-                ss = findIndex(s,sIndex,sChar);
-            }else{
-                ss = findIndex(s,sIndex,perP);
-            }
-            return isMatch(s , ss , p , pIndex+1);
-        }else if (pChar == '.' || pChar == sChar){
-            return isMatch(s , sIndex+1 , p , pIndex+1);
-        }else{
-            return isMatch(s , sIndex , p , pIndex+1);
-        }
-
+        return flag && isMatch(s , sIndex+1 , p , pIndex +1);
     }
-    private int findIndex(String s, int sIndex,char perP){
-        while ( sIndex < s.length() && s.charAt(sIndex) == perP){
-            sIndex++;
-        }
-        return sIndex;
-    }
-
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
