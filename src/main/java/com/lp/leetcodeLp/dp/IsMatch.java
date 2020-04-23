@@ -67,24 +67,21 @@ public class IsMatch {
                 return true;
             }
         }
-        char pChar = p.charAt(pIndex);
         char sChar = s.charAt(sIndex);
+        char pChar = p.charAt(pIndex);
         if (pChar == '*'){
             char perP = p.charAt(pIndex-1);
+            int ss = 0;
             if (perP== '.'){
-                return p.charAt(p.length()-1) == s.charAt(s.length()-1);
+                ss = findIndex(s,sIndex,sChar);
             }else{
-                int ss = findIndex(s,sIndex,perP);
-                return isMatch(s , ss , p , pIndex+1);
+                ss = findIndex(s,sIndex,perP);
             }
-        }else if (pChar == '.'){
+            return isMatch(s , ss , p , pIndex+1);
+        }else if (pChar == '.' || pChar == sChar){
             return isMatch(s , sIndex+1 , p , pIndex+1);
         }else{
-            if (pChar == sChar){
-                return isMatch(s , sIndex+1 , p , pIndex+1);
-            }else{
-                return isMatch(s , sIndex , p , pIndex+1);
-            }
+            return isMatch(s , sIndex , p , pIndex+1);
         }
 
     }
@@ -99,8 +96,8 @@ public class IsMatch {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         IsMatch numTrees = new IsMatch();
-        String s = "ab";
-        String p = ".*";
+        String s = "aaa";
+        String p = "a*a";
         System.out.println(numTrees.isMatch(s,p));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
