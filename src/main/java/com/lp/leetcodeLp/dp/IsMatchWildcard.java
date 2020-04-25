@@ -52,15 +52,35 @@ package com.lp.leetcodeLp.dp;
  */
 public class IsMatchWildcard {
     public boolean isMatch(String s, String p) {
+        if(s==null || p==null)return false;
+        return isMatch(s,0,p,0);
+    }
 
-        return false;
+    public boolean isMatch(String s, int sIndex, String p, int pIndex ) {
+        if(pIndex>=p.length()) return sIndex==s.length();
+        boolean f9 = false;
+        if(  (sIndex < s.length()) && (p.charAt(pIndex) == '?'||p.charAt(pIndex) == s.charAt(sIndex))){
+            f9 = true;
+        }else if (p.charAt(pIndex) == '*'){
+            //匹配空字符串
+            boolean f0 = isMatch(s,sIndex, p,pIndex+1);
+            //匹配任意的字符串
+            boolean f1 = false;
+            while (sIndex < s.length()){
+                ++sIndex;
+                f1 = isMatch(s,sIndex, p,pIndex+1);
+                if (f1)break;
+            }
+            return f0 || f1;
+        }
+        return f9 && isMatch(s,sIndex+1, p,pIndex+1);
     }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         IsMatchWildcard numTrees = new IsMatchWildcard();
-        String s = "aaa";
-        String p = "a*a";
+        String s = "adceb";
+        String p = "*a*b";
         System.out.println(numTrees.isMatch(s,p));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
