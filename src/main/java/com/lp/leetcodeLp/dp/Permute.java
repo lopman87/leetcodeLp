@@ -31,6 +31,10 @@ public class Permute {
         return lists;
     }
 
+    private void tryPermute(List<List<Integer>> lists , int number){
+        List<Integer> lastArray = lists.get(lists.size()-1);
+    }
+
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
