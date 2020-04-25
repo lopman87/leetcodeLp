@@ -64,6 +64,9 @@ public class IsMatchWildcard {
         }else if (p.charAt(pIndex) == '*'){
             //匹配空字符串
             boolean f0 = isMatch(s,sIndex, p,pIndex+1);
+            if (f0){
+                return true;
+            }
             //匹配任意的字符串
             boolean f1 = false;
             while (sIndex < s.length()){
@@ -79,8 +82,8 @@ public class IsMatchWildcard {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         IsMatchWildcard numTrees = new IsMatchWildcard();
-        String s = "acdcb";
-        String p = "a*c?b";
+        String s = "aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba";
+        String p ="a*******ab";
         System.out.println(numTrees.isMatch(s,p));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
