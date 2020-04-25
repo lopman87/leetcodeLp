@@ -79,8 +79,8 @@ public class IsMatchWildcard {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         IsMatchWildcard numTrees = new IsMatchWildcard();
-        String s = "adceb";
-        String p = "*a*b";
+        String s = "acdcb";
+        String p = "a*c?b";
         System.out.println(numTrees.isMatch(s,p));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
