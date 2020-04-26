@@ -33,6 +33,10 @@ public class LongestPalindromeSubseq {
         if (s.length() == 1){
             return 1;
         }
+        if (s.length() == 2){
+            return s.charAt(0) == s.charAt(1) ? 2 : 1;
+        }
+        boolean[][] dp = new boolean[s.length()][s.length()];
 
         return 0;
     }
