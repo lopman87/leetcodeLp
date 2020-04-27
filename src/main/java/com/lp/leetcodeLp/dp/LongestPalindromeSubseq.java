@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.dp;
 
+import java.util.*;
+
 /**
  * 给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。
  *
@@ -36,10 +38,48 @@ public class LongestPalindromeSubseq {
         if (s.length() == 2){
             return s.charAt(0) == s.charAt(1) ? 2 : 1;
         }
-        boolean[][] dp = new boolean[s.length()][s.length()];
-
-        return 0;
+        TreeSet<String> result = new TreeSet<>(Comparator.comparingInt(String::length).reversed());
+        for (int i = 0; i < s.length()-1 ; i++) {
+            StringBuilder  stringBuilder = new StringBuilder();
+            buildPalindrome(i-1,i+1,s,stringBuilder);
+            result.add(stringBuilder.toString());
+            if (s.charAt(i) == s.charAt(i+1)){
+                StringBuilder stringBuilder2 = new StringBuilder();
+                buildPalindrome(i-1,i+2,s,stringBuilder2);
+                result.add(stringBuilder2.toString());
+            }
+        }
+        String rest= result.first();
+        System.out.println(rest);
+        return rest.length();
     }
+    private void buildPalindrome(int leftOffset, int rightOffset ,  String target , StringBuilder result){
+        if (leftOffset < 0 ){
+           String res1 = target.substring(0, rightOffset >= target.length()  ? target.length()  : rightOffset);
+            result.append(res1);
+            return;
+        }
+        if (rightOffset > target.length() - 1){
+            String res2 =  target.substring(leftOffset+1);
+            result.append(res2);
+            return;
+        }
+        char left = target.charAt(leftOffset);
+        char right = target.charAt(rightOffset);
+        if (left == right){
+            buildPalindrome(leftOffset-1, rightOffset+1,target,result);
+        }else{
+            while (rightOffset < target.length()){
+                if (target.charAt(rightOffset) == left){
+                    break;
+                }
+                rightOffset++;
+            }
+            buildPalindrome(leftOffset-1, rightOffset,target,result);
+        }
+    }
+
+
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
