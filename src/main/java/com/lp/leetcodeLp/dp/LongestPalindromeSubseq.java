@@ -60,7 +60,7 @@ public class LongestPalindromeSubseq {
         if (leftOffset < 0 ){
             return;
         }
-        if (rightOffset > target.length() - 1){
+        if (rightOffset >= target.length()){
             return;
         }
         char left = target.charAt(leftOffset);
@@ -70,18 +70,18 @@ public class LongestPalindromeSubseq {
             result.append(right);
             buildPalindrome(leftOffset-1, rightOffset+1,target,result);
         }else{
-            while (rightOffset < target.length()){
+            while (rightOffset <= target.length()-1){
                 if (target.charAt(rightOffset) == left){
                     break;
                 }
                 rightOffset++;
             }
-            if ((rightOffset > target.length()-1) && target.charAt(target.length()-1) != left){
+            if ((rightOffset == target.length()) && target.charAt(rightOffset-1) != left){
                 return;
             }
             result.insert(0,left);
             result.append(target.charAt(rightOffset > target.length()-1 ? target.length()-1 : rightOffset));
-            buildPalindrome(leftOffset-1, rightOffset,target,result);
+            buildPalindrome(leftOffset-1, rightOffset+1,target,result);
         }
     }
 
@@ -90,7 +90,7 @@ public class LongestPalindromeSubseq {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         LongestPalindromeSubseq numTrees = new LongestPalindromeSubseq();
-        System.out.println(numTrees.longestPalindromeSubseq("bbbab"));
+        System.out.println(numTrees.longestPalindromeSubseq("cbbd"));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
