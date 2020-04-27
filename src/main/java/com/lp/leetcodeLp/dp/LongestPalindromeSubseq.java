@@ -57,6 +57,7 @@ public class LongestPalindromeSubseq {
         return rest.length();
     }
     private void buildPalindrome(int leftOffset, int rightOffset ,  String target , StringBuilder result){
+
         if (leftOffset < 0 ){
             return;
         }
@@ -70,18 +71,34 @@ public class LongestPalindromeSubseq {
             result.append(right);
             buildPalindrome(leftOffset-1, rightOffset+1,target,result);
         }else{
-            while (rightOffset <= target.length()-1){
-                if (target.charAt(rightOffset) == left){
+
+            int tmpRightOffset = rightOffset;
+
+            while (tmpRightOffset <= target.length()-1){
+                if (target.charAt(tmpRightOffset) == left){
                     break;
                 }
-                rightOffset++;
+                tmpRightOffset++;
             }
-            if ((rightOffset == target.length()) && target.charAt(rightOffset-1) != left){
+            if ((tmpRightOffset == target.length()) && target.charAt(tmpRightOffset-1) != left){
+                while (leftOffset > 0){
+                    if (target.charAt(leftOffset) == right){
+                        break;
+                    }
+                    leftOffset--;
+                }
+                if ((leftOffset <= 0) && target.charAt(leftOffset) != right){
+                    return;
+                }
+                result.insert(leftOffset , target.charAt(leftOffset));
+                result.append(right);
+                buildPalindrome(leftOffset-1, rightOffset+1,target,result);
                 return;
             }
             result.insert(0,left);
-            result.append(target.charAt(rightOffset > target.length()-1 ? target.length()-1 : rightOffset));
-            buildPalindrome(leftOffset-1, rightOffset+1,target,result);
+            result.append(target.charAt(tmpRightOffset > target.length()-1 ? target.length()-1 : tmpRightOffset));
+            buildPalindrome(leftOffset-1, tmpRightOffset+1,target,result);
+
         }
     }
 
@@ -90,7 +107,7 @@ public class LongestPalindromeSubseq {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         LongestPalindromeSubseq numTrees = new LongestPalindromeSubseq();
-        System.out.println(numTrees.longestPalindromeSubseq("cbbd"));
+        System.out.println(numTrees.longestPalindromeSubseq("euazbipzncptldueeuechubrcourfpftcebikrxhybkymimgvldiwqvkszfycvqyvtiwfckexmowcxztkfyzqovbtmzpxojfofbvwnncajvrvdbvjhcrameamcfmcoxryjukhpljwszknhiypvyskmsujkuggpztltpgoczafmfelahqwjbhxtjmebnymdyxoeodqmvkxittxjnlltmoobsgzdfhismogqfpfhvqnxeuosjqqalvwhsidgiavcatjjgeztrjuoixxxoznklcxolgpuktirmduxdywwlbikaqkqajzbsjvdgjcnbtfksqhquiwnwflkldgdrqrnwmshdpykicozfowmumzeuznolmgjlltypyufpzjpuvucmesnnrwppheizkapovoloneaxpfinaontwtdqsdvzmqlgkdxlbeguackbdkftzbnynmcejtwudocemcfnuzbttcoew"));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
