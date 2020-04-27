@@ -40,11 +40,14 @@ public class LongestPalindromeSubseq {
         }
         TreeSet<String> result = new TreeSet<>(Comparator.comparingInt(String::length).reversed());
         for (int i = 0; i < s.length()-1 ; i++) {
-            StringBuilder  stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(s.charAt(i));
             buildPalindrome(i-1,i+1,s,stringBuilder);
             result.add(stringBuilder.toString());
             if (s.charAt(i) == s.charAt(i+1)){
                 StringBuilder stringBuilder2 = new StringBuilder();
+                stringBuilder2.append(s.charAt(i));
+                stringBuilder2.append(s.charAt(i+1));
                 buildPalindrome(i-1,i+2,s,stringBuilder2);
                 result.add(stringBuilder2.toString());
             }
@@ -55,18 +58,16 @@ public class LongestPalindromeSubseq {
     }
     private void buildPalindrome(int leftOffset, int rightOffset ,  String target , StringBuilder result){
         if (leftOffset < 0 ){
-           String res1 = target.substring(0, rightOffset >= target.length()  ? target.length()  : rightOffset);
-            result.append(res1);
             return;
         }
         if (rightOffset > target.length() - 1){
-            String res2 =  target.substring(leftOffset+1);
-            result.append(res2);
             return;
         }
         char left = target.charAt(leftOffset);
         char right = target.charAt(rightOffset);
         if (left == right){
+            result.insert(0,left);
+            result.append(right);
             buildPalindrome(leftOffset-1, rightOffset+1,target,result);
         }else{
             while (rightOffset < target.length()){
@@ -75,6 +76,11 @@ public class LongestPalindromeSubseq {
                 }
                 rightOffset++;
             }
+            if ((rightOffset > target.length()-1) && target.charAt(target.length()-1) != left){
+                return;
+            }
+            result.insert(0,left);
+            result.append(target.charAt(rightOffset > target.length()-1 ? target.length()-1 : rightOffset));
             buildPalindrome(leftOffset-1, rightOffset,target,result);
         }
     }
