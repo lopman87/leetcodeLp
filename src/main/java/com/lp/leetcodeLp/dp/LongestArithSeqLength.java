@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.dp;
 
+import java.util.*;
+
 /**
  * 给定一个整数数组 A，返回 A 中最长等差子序列的长度。
  *
@@ -34,11 +36,20 @@ public class LongestArithSeqLength {
 
 
     public int longestArithSeqLength(int[] A) {
-
+        Map<Integer , List<Integer>> integerListMap = new HashMap<>();
         for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < i; j++) {
-
+            List<Integer> list = null;
+            if (integerListMap.containsKey(A[i])){
+                list = integerListMap.get(A[i]);
+            }else {
+                list = new ArrayList<>();
             }
+            for (int j = 0; j <= i; j++) {
+                if (A[j] > A[i]){
+                    list.add(A[j]);
+                }
+            }
+            integerListMap.put(A[i], list);
         }
         return 0;
     }
