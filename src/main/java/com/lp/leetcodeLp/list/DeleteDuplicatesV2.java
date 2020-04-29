@@ -23,6 +23,11 @@ public class DeleteDuplicatesV2 {
             return head;
         }
         hasDup(head);
+        ListNode tmpHead = new ListNode(Integer.MIN_VALUE);
+        tmpHead.next = head;
+        return doDeleteDuplicates(tmpHead);
+    }
+    public ListNode doDeleteDuplicates(ListNode head) {
         ListNode tmpHead = head;
         while (tmpHead!= null){
             ListNode tmp = null;
@@ -38,7 +43,7 @@ public class DeleteDuplicatesV2 {
         if (stop()){
             return head;
         }
-        return deleteDuplicates(head);
+        return doDeleteDuplicates(head);
     }
 
     private boolean stop(){
@@ -71,12 +76,12 @@ public class DeleteDuplicatesV2 {
         long start = System.currentTimeMillis();
         DeleteDuplicatesV2 numTrees = new DeleteDuplicatesV2();
         ListNode head = new ListNode(1);
-        head.next = new ListNode(1);
-        head.next.next = new ListNode(1);
-        head.next.next.next = new ListNode(2);
-        head.next.next.next.next = new ListNode(3);
-//        head.next.next.next.next.next = new ListNode(4);
-//        head.next.next.next.next.next.next = new ListNode(5);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(3);
+        head.next.next.next.next = new ListNode(4);
+        head.next.next.next.next.next = new ListNode(4);
+        head.next.next.next.next.next.next = new ListNode(5);
         ListNode ggg = numTrees.deleteDuplicates(head);
         System.out.println(ggg);
         long end = System.currentTimeMillis();
