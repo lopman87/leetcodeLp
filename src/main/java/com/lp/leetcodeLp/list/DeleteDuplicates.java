@@ -21,9 +21,36 @@ import com.lp.leetcodeLp.dp.Rob;
 public class DeleteDuplicates {
 
     public ListNode deleteDuplicates(ListNode head) {
-        return head;
+        if (head == null){
+            return head;
+        }
+        if (!hasDup(head)){
+            return head;
+        }
+        ListNode tmpHead = head;
+        while (tmpHead!= null){
+            ListNode tmp = null;
+            if (tmpHead.next!=null && tmpHead.val == tmpHead.next.val){
+                tmp = tmpHead.next;
+                tmpHead.next = tmp.next;
+            }
+            tmpHead = tmpHead.next;
+        }
+        return deleteDuplicates(head);
     }
-    public class ListNode {
+    private boolean hasDup(ListNode head){
+        ListNode tmpHead = head;
+        while (tmpHead!= null){
+            if (tmpHead.next!=null && tmpHead.val == tmpHead.next.val){
+                return true;
+            }
+            tmpHead = tmpHead.next;
+        }
+        return false;
+    }
+
+
+    public static class ListNode {
       int val;
       ListNode next;
       ListNode(int x) { val = x; }
@@ -31,8 +58,13 @@ public class DeleteDuplicates {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         DeleteDuplicates numTrees = new DeleteDuplicates();
-        ListNode head = null;
-        System.out.println(numTrees.deleteDuplicates(head));
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(1);
+        head.next.next = new ListNode(1);
+//        head.next.next.next = new ListNode(3);
+//        head.next.next.next.next = new ListNode(3);
+        ListNode ggg = numTrees.deleteDuplicates(head);
+        System.out.println(ggg);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
