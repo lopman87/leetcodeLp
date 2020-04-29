@@ -16,24 +16,43 @@ package com.lp.leetcodeLp.list;
 public class DeleteDuplicatesV2 {
 
     public ListNode deleteDuplicates(ListNode head) {
-        return null;
+        if (head == null){
+            return head;
+        }
+        if (!hasDup(head)){
+            return head;
+        }
+        ListNode tmpHead = head;
+        while (tmpHead!= null){
+            ListNode tmp = null;
+            if (tmpHead.next!=null && tmpHead.val == tmpHead.next.val){
+                tmp = tmpHead.next;
+                tmpHead.next = tmp.next;
+            }
+            tmpHead = tmpHead.next;
+        }
+        return deleteDuplicates(head);
     }
-
-    public static class ListNode {
-        int val;
-        DeleteDuplicates.ListNode next;
-        ListNode(int x) { val = x; }
+    private boolean hasDup(ListNode head){
+        ListNode tmpHead = head;
+        while (tmpHead!= null){
+            if (tmpHead.next!=null && tmpHead.val == tmpHead.next.val){
+                return true;
+            }
+            tmpHead = tmpHead.next;
+        }
+        return false;
     }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         DeleteDuplicatesV2 numTrees = new DeleteDuplicatesV2();
-        DeleteDuplicatesV2.ListNode head = new DeleteDuplicatesV2.ListNode(1);
-        head.next = new DeleteDuplicates.ListNode(1);
-        head.next.next = new DeleteDuplicates.ListNode(1);
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(1);
+        head.next.next = new ListNode(1);
 //        head.next.next.next = new ListNode(3);
 //        head.next.next.next.next = new ListNode(3);
-        DeleteDuplicatesV2.ListNode ggg = numTrees.deleteDuplicates(head);
+        ListNode ggg = numTrees.deleteDuplicates(head);
         System.out.println(ggg);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
