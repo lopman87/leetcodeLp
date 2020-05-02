@@ -1,5 +1,9 @@
 package com.lp.leetcodeLp.list;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
@@ -42,7 +46,27 @@ package com.lp.leetcodeLp.list;
  */
 public class DetectCycle {
 
+    Set<ListNode> listNodes = new HashSet<>();
+
     public ListNode detectCycle(ListNode head) {
+        if (head == null){
+            return head;
+        }
+        if (head.next == null){
+            return null;
+        }
+        if (head.next != null && head.next == head){
+            return head;
+        }
+
+        ListNode tmpHead = head;
+        while (tmpHead.next!=null){
+            if (listNodes.contains(tmpHead)){
+                return tmpHead;
+            }
+            listNodes.add(tmpHead);
+            tmpHead = tmpHead.next;
+        }
 
         return null;
     }
@@ -63,7 +87,7 @@ public class DetectCycle {
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
 
-        head.next.next.next.next.next = new ListNode(6);
+        head.next.next.next.next.next = head.next;
 
         ListNode fgg = (numTrees.detectCycle(startNode));
         System.out.println(fgg);
