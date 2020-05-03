@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.list;
 
+import java.util.List;
+
 /**
  * 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
  *
@@ -21,7 +23,18 @@ public class SwapPairs {
         if (head==null||head.next==null){
             return head;
         }
-        
+        ListNode tmpHead = head;
+        while (tmpHead!=null && tmpHead.next != null){
+
+            if (tmpHead.next != null){
+                ListNode currentNext = tmpHead.next;
+                int currentVal = tmpHead.val;
+                tmpHead.val = currentNext.val;
+                currentNext.val = currentVal;
+            }
+
+            tmpHead = tmpHead.next.next;
+        }
         return head;
     }
 
@@ -31,9 +44,6 @@ public class SwapPairs {
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
         head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(4);
-        head.next.next.next.next = new ListNode(5);
-        head.next.next.next.next.next = new ListNode(6);
         ListNode lll = numTrees.swapPairs(head);
         while (lll!=null){
             System.out.println(lll.val);
