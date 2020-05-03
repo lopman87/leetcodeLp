@@ -18,20 +18,23 @@ package com.lp.leetcodeLp.list;
 public class SwapPairs {
 
     public ListNode swapPairs(ListNode head) {
-
+        if (head==null||head.next==null){
+            return head;
+        }
+        
         return head;
     }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        RemoveNthFromEnd numTrees = new RemoveNthFromEnd();
+        SwapPairs numTrees = new SwapPairs();
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
         head.next.next.next.next.next = new ListNode(6);
-        ListNode lll = numTrees.removeNthFromEnd(head,6);
+        ListNode lll = numTrees.swapPairs(head);
         while (lll!=null){
             System.out.println(lll.val);
             lll = lll.next;
