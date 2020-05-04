@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.list;
 
+import java.util.List;
+
 /**
  * 插入排序算法：
  *
@@ -17,8 +19,33 @@ public class InsertionSortList {
     public ListNode insertionSortList(ListNode head) {
         if (head==null || head.next == null)return head;
         ListNode tmpHead = head;
-        return null;
+
+        ListNode newList = new ListNode(Integer.MIN_VALUE);
+        while (tmpHead!=null){
+            insertSort(newList , tmpHead.val);
+            tmpHead = tmpHead.next;
+        }
+        return newList.next;
     }
+
+    private void insertSort(ListNode head , int value){
+        ListNode newList = new ListNode(value);
+        boolean ff = false;
+        while (head.next!=null){
+            if (head.next.val < value){
+
+            }else{
+                ListNode tmp = head.next;
+                newList.next = tmp;
+                head.next = newList;
+                ff = true;
+                break;
+            }
+            head = head.next;
+        }
+        if (!ff)head.next = newList;
+    }
+
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
