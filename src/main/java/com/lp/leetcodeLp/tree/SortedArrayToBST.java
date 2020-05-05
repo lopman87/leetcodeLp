@@ -24,15 +24,40 @@ package com.lp.leetcodeLp.tree;
 public class SortedArrayToBST {
 
     public TreeNode sortedArrayToBST(int[] nums) {
-
-        return null;
+        if (nums == null || nums.length == 0)return null;
+        if (nums.length == 1)return new TreeNode(nums[0]);
+        if (nums.length == 2){
+            TreeNode root = new TreeNode(nums[0]);
+            root.right = new TreeNode(nums[1]);
+            return root;
+        }
+        TreeNode root = buildTree(nums ,0 , nums.length-1);
+        return root;
     }
+
+    private TreeNode buildTree(int[] nums, int leftIndex , int rightIndex){
+
+        int flag = (leftIndex+rightIndex)/2;
+
+        TreeNode root = new TreeNode(nums[flag]);
+        if (leftIndex == rightIndex){
+            return root;
+        }
+        if (rightIndex-leftIndex <=1){
+            root.right = new TreeNode(nums[flag+1]);
+            return root;
+        }
+        root.left = buildTree(nums,leftIndex,flag-1);
+        root.right = buildTree(nums,flag+1,rightIndex);
+        return root;
+    }
+
 
 
 
     public static void main(String[] args){
         SortedArrayToBST cache = new SortedArrayToBST();
-        int[] nums = {3,1,3,4,2};
+        int[] nums = {-1,0,1,2};
         System.out.println(cache.sortedArrayToBST(nums));
     }
 }
