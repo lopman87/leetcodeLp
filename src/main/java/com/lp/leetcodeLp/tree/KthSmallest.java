@@ -1,9 +1,20 @@
 package com.lp.leetcodeLp.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KthSmallest {
     public int kthSmallest(TreeNode root, int k) {
+        List<Integer> result = new ArrayList<>();
+        visitTree(root,result);
+        return result.get(k-1);
+    }
 
-        return 0;
+    private void visitTree(TreeNode root , List<Integer> result){
+        if (root==null)return;
+        visitTree(root.left,result);
+        result.add(root.val);
+        visitTree(root.right,result);
     }
 
     public static void main(String args[]){
