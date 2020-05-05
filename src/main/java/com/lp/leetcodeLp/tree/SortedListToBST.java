@@ -2,6 +2,9 @@ package com.lp.leetcodeLp.tree;
 
 import com.lp.leetcodeLp.list.ListNode;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 给定一个单链表，其中的元素按升序排序，将其转换为高度平衡的二叉搜索树。
  *
@@ -28,8 +31,37 @@ public class SortedListToBST {
     public TreeNode sortedListToBST(ListNode head) {
         if (head == null )return null;
         if (head.next == null)return new TreeNode(head.val);
+        if (head.next.next == null){
+            TreeNode root = new TreeNode(head.val);
+            root.right =  new TreeNode(head.next.val);
+            return root;
+        }
+        List<Integer> integerList = new LinkedList<>();
+        ListNode tmpHead = head;
+        while (tmpHead!=null){
+            integerList.add(tmpHead.val);
+            tmpHead = tmpHead.next;
+        }
+        Integer[] strings = integerList.stream().toArray(Integer[]::new);
+        TreeNode root = buildTree(strings ,0 , strings.length-1);
+        return root;
+    }
 
-        return null;
+    private TreeNode buildTree(Integer[] nums, int leftIndex , int rightIndex){
+
+        int flag = (leftIndex+rightIndex)/2;
+
+        TreeNode root = new TreeNode(nums[flag]);
+        if (leftIndex == rightIndex){
+            return root;
+        }
+        if (rightIndex-leftIndex <=1){
+            root.right = new TreeNode(nums[flag+1]);
+            return root;
+        }
+        root.left = buildTree(nums,leftIndex,flag-1);
+        root.right = buildTree(nums,flag+1,rightIndex);
+        return root;
     }
 
     public static void main(String[] args){
