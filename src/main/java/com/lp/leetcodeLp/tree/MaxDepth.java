@@ -22,20 +22,33 @@ public class MaxDepth {
 
     public int maxDepth(TreeNode root) {
         if (root==null)return 0;
-
-        return 0;
+        return visitTree(root , 1);
     }
+    private int visitTree(TreeNode root , int deep){
+        if (root == null){
+            return deep;
+        }
+        int leftDeep = deep;
+        if (root.left!=null){
+            leftDeep = visitTree(root.left , leftDeep+1);
+        }
+        int rightDeep = deep;
+        if (root.right!=null){
+            rightDeep = visitTree(root.right , rightDeep+1);
+        }
+        return Math.max(leftDeep,rightDeep);
+    }
+
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         MaxDepth numTrees = new MaxDepth();
 
-        TreeNode root = new TreeNode(10);
-        root.left=new TreeNode(5);
-        root.right= new TreeNode(15);
+        TreeNode root = new TreeNode(3);
+ //       root.left=new TreeNode(9);
+        root.right= new TreeNode(20);
 
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(20);
-
 
         System.out.println(numTrees.maxDepth(root));
         long end = System.currentTimeMillis();
