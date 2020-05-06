@@ -28,7 +28,10 @@ public class BuildTree {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder==null||inorder==null)return null;
         if (preorder.length!=inorder.length)return null;
-
+        for (int i = 0; i < preorder.length; i++) {
+            int rootVal = preorder[i];
+            
+        }
         return null;
     }
 
