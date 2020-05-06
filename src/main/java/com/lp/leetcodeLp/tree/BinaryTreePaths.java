@@ -32,49 +32,25 @@ public class BinaryTreePaths {
         if(root==null){
             return stringList;
         }
-        StringBuilder stringBuilder = new StringBuilder();
+        printPathsRecur(root, stringList, "");
         return stringList;
     }
 
-    void printPaths(TreeNode node)
-    {
-        int path[] = new int[1000];
-        printPathsRecur(node, path, 0);
-    }
 
-    /* Recursive helper function -- given a node, and an array
-       containing the path from the root node up to but not
-       including this node, print out all the root-leaf paths.*/
-    void printPathsRecur(TreeNode node, int path[], int pathLen)
+    void printPathsRecur(TreeNode node, List<String> stringList, String pathLen)
     {
         if (node == null)
             return;
-
-        /* append this node to the path array */
-        path[pathLen] = node.val;
-        pathLen++;
-
-        /* it's a leaf, so print the path that led to here  */
+        pathLen += node.val;
         if (node.left == null && node.right == null)
-            printArray(path, pathLen);
+            stringList.add(pathLen);
         else
         {
-            /* otherwise try both subtrees */
-            printPathsRecur(node.left, path, pathLen);
-            printPathsRecur(node.right, path, pathLen);
+            printPathsRecur(node.left, stringList, pathLen+ "->");
+            printPathsRecur(node.right, stringList, pathLen+ "->");
         }
     }
 
-    /* Utility function that prints out an array on a line. */
-    void printArray(int ints[], int len)
-    {
-        int i;
-        for (i = 0; i < len; i++)
-        {
-            System.out.print(ints[i] + "->");
-        }
-        System.out.println("");
-    }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
@@ -87,7 +63,7 @@ public class BinaryTreePaths {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(20);
 
-        numTrees.printPaths(root);
+        numTrees.binaryTreePaths(root);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
