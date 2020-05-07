@@ -38,7 +38,9 @@ public class BuildTree {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder==null||inorder==null)return null;
+        if (preorder.length ==0 ||inorder.length ==0)return null;
         if (preorder.length!=inorder.length)return null;
+
         int rootVal = preorder[0];
 
         TreeNode root = new TreeNode(rootVal);
@@ -70,18 +72,27 @@ public class BuildTree {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         BuildTree numTrees = new BuildTree();
-        int[] preorder = {12,9,2,8,20,7};
-        int[] inorder = {2,9,8,12,20,7};
+        int[] preorder = {12};
+        int[] inorder = {12};
         TreeNode root = numTrees.buildTree(preorder,inorder);
-        numTrees.visitTree(root);
+        numTrees.visitTreePreOrder(root);
+        System.out.println("\n");
+        numTrees.visitTreeInOrder(root);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
 
-    private void visitTree(TreeNode root){
-        if (root == null)return;
-        System.out.println(root.val);
-        visitTree(root.left);
-        visitTree(root.right);
+    private void visitTreePreOrder(TreeNode root){
+        if (root == null){return;}
+        System.out.print(root.val+" ");
+        visitTreePreOrder(root.left);
+        visitTreePreOrder(root.right);
+    }
+
+    private void visitTreeInOrder(TreeNode root){
+        if (root == null){return;}
+        visitTreeInOrder(root.left);
+        System.out.print(root.val+" ");
+        visitTreeInOrder(root.right);
     }
 }
