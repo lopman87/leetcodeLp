@@ -1,19 +1,21 @@
 package com.lp.leetcodeLp.tree;
 
+import java.util.Arrays;
+
 /**
  * 输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
  *
  * 例如，给出
  *
- * 前序遍历 preorder = [3,9,20,15,7]
- * 中序遍历 inorder = [9,3,15,20,7]
+ * 前序遍历 preorder = [12,9,2,8,20,15,7]
+ * 中序遍历 inorder = [2,9,8,12,15,20,7]
  * 返回如下的二叉树：
  *
- *     3
- *    / \
- *   9  20
- *     /  \
- *    15   7
+ *      12
+ *    /   \
+ *   9    20
+ *  / \  /  \
+ * 2  8 15   7
  *  
  * 限制：
  *
@@ -25,24 +27,61 @@ package com.lp.leetcodeLp.tree;
  */
 public class BuildTree {
 
+    private int findIndex(int[] inorder, int rootVal){
+        for (int i = 0; i < inorder.length; i++) {
+            if (inorder[i] == rootVal){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder==null||inorder==null)return null;
         if (preorder.length!=inorder.length)return null;
-        for (int i = 0; i < preorder.length; i++) {
-            int rootVal = preorder[i];
-            
-        }
-        return null;
-    }
+        int rootVal = preorder[0];
 
+        TreeNode root = new TreeNode(rootVal);
+        if (preorder.length == 1){
+            return root;
+        }
+
+
+        int rootIndex = findIndex(inorder,rootVal);
+
+        int leftWidth = rootIndex-0;
+
+        int[] tempLeftInorder = Arrays.copyOfRange(inorder, 0, rootIndex);
+
+        int[] tempRightInorder = Arrays.copyOfRange(inorder, rootIndex+1, inorder.length);
+
+        int[] tempLeftPreorder = Arrays.copyOfRange(preorder, 1, leftWidth+1);
+
+        int[] tempRightPreorder = Arrays.copyOfRange(preorder, leftWidth+1, inorder.length);
+
+
+        root.left = buildTree(tempLeftPreorder,tempLeftInorder);
+
+        root.right = buildTree(tempRightPreorder,tempRightInorder);
+
+        return root;
+    }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         BuildTree numTrees = new BuildTree();
-        int[] preorder = {3,9,20,15,7};
-        int[] inorder = {9,3,15,20,7};
-        System.out.println(numTrees.buildTree(preorder,inorder));
+        int[] preorder = {12,9,2,8,20,7};
+        int[] inorder = {2,9,8,12,20,7};
+        TreeNode root = numTrees.buildTree(preorder,inorder);
+        numTrees.visitTree(root);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
+    }
+
+    private void visitTree(TreeNode root){
+        if (root == null)return;
+        System.out.println(root.val);
+        visitTree(root.left);
+        visitTree(root.right);
     }
 }
