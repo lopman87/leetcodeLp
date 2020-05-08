@@ -1,30 +1,46 @@
 package com.lp.leetcodeLp.tree;
 
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
+/**
+ * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。
+ *
+ *  
+ *
+ * 示例 :
+ * 给定二叉树
+ *
+ *           1
+ *          / \
+ *         2   3
+ *        / \
+ *       4   5
+ * 返回 3, 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。
+ *
+ *  
+ *
+ * 注意：两结点之间的路径长度是以它们之间边的数目表示。
+ *
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/diameter-of-binary-tree
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ */
 public class DiameterOfBinaryTree {
-
+    private int max = 0;
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null)return 0;
-        TreeSet<String> treeSet = new TreeSet<>(Comparator.comparingInt(String::length).reversed());
-        visit(root , treeSet , "");
-        String path1 = treeSet.pollFirst();
-        String path2 = treeSet.pollFirst();
-        path1 = path1.replace("-","");
-        path2 = path2.replace("-","");
-        return path1.length()+path2.length()-2;
+        getDep(root);
+        return max;
     }
 
-    private void visit(TreeNode root , TreeSet<String> treeSet , String path){
-        if (root==null)return;
-        path += root.val;
-        if (root.left==null&&root.right==null){
-            treeSet.add(path);
-        }else {
-            visit(root.left , treeSet , path+"-");
-            visit(root.right , treeSet , path+"-");
+    private int getDep(TreeNode root) {
+        if (root == null) {
+            return 0;
         }
+        int leftDep = getDep(root.left);
+        int rightDep = getDep(root.right);
+        max = Math.max(leftDep + rightDep, max);
+        return Math.max(leftDep, rightDep) + 1;
     }
 
     public static void main(String args[]){
@@ -37,8 +53,6 @@ public class DiameterOfBinaryTree {
 
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
-
-        root.left.right.right = new TreeNode(6);
 
         System.out.println(numTrees.diameterOfBinaryTree(root));
         long end = System.currentTimeMillis();
