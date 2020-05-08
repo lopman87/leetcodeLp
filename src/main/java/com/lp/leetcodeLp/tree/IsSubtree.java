@@ -42,9 +42,32 @@ package com.lp.leetcodeLp.tree;
 public class IsSubtree {
 
     public boolean isSubtree(TreeNode s, TreeNode t) {
-        return false;
+        if (s == null || t == null){
+            if (s == null && t == null){
+                return true;
+            }
+            return false;
+        }
+        return isSametree(s , t)|| isSubtree(s.left , t) || isSubtree(s.right , t) ;
     }
 
+
+    public boolean isSametree(TreeNode s, TreeNode t) {
+        if (s == null || t == null){
+            if (s == null && t == null){
+                return true;
+            }
+            return false;
+        }
+        if (s.val != t.val)
+            return false;
+        else {
+            boolean valFlag = (s.val == t.val);
+            boolean leftFlag = isSametree(s.left , t.left);
+            boolean rightFlag = isSametree(s.right , t.right);
+            return  valFlag &&leftFlag && rightFlag;
+        }
+    }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
@@ -52,12 +75,12 @@ public class IsSubtree {
 
         TreeNode root = new TreeNode(1);
         root.left=new TreeNode(2);
+        root.left.right=new TreeNode(21);
         root.right= new TreeNode(3);
 
-        root.left.left = new TreeNode(4);
-        root.left.right = new TreeNode(5);
 
-        System.out.println(numTrees.isSubtree(root ,root.left));
+        TreeNode root1 = new TreeNode(2);
+        System.out.println(numTrees.isSubtree(root ,root1));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
