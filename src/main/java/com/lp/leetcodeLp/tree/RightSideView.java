@@ -1,9 +1,6 @@
 package com.lp.leetcodeLp.tree;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
@@ -28,24 +25,42 @@ public class RightSideView {
 
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> integerList = new ArrayList<>();
+        if (root == null){
+            return integerList;
+        }
+        List<String> StringList = new ArrayList<>();
+        levleVisit(root,StringList);
+        for (String s: StringList) {
+            String first =  s.substring(0 , s.indexOf("."));
+            integerList.add(Integer.parseInt(first));
+        }
         return integerList;
     }
 
-    private void levleVisit(TreeNode root){
-        Queue<TreeNode> integerQueue = new ArrayDeque<>();
-        integerQueue.add(root);
-        StringBuilder stringBuilder = new StringBuilder();
-
-        while (!integerQueue.isEmpty()){
-            TreeNode head = integerQueue.poll();
-            stringBuilder.append(head.val+".");
-            if (head.left != null){
-                integerQueue.add(head.left);
+    private void levleVisit(TreeNode root ,List<String> StringList){
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<TreeNode> nodeStack = new LinkedList<>();
+        nodeStack.add(root);
+        while (true){
+            while (!nodeStack.isEmpty()){
+                TreeNode topNode = nodeStack.poll();
+                nodeQueue.add(topNode);
             }
-            if (head.right != null){
-                integerQueue.add(head.right);
-            }
+            StringBuilder levelStr = new StringBuilder();
+            while (!nodeQueue.isEmpty()){
+                TreeNode inQueue = nodeQueue.poll();
+                if (inQueue == null)continue;
+                levelStr.append(inQueue.val+".");
+                if (inQueue.right != null){
+                    nodeStack.add(inQueue.right);
+                }
+                if (inQueue.left != null){
+                    nodeStack.add(inQueue.left);
+                }
 
+            }
+            StringList.add(levelStr.toString());
+            if (nodeStack.isEmpty())break;
         }
     }
 
@@ -53,15 +68,21 @@ public class RightSideView {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         RightSideView numTrees = new RightSideView();
+        TreeNode root = new TreeNode(1);
 
-        TreeNode root = new TreeNode(10);
-        root.left=new TreeNode(5);
-        root.right= new TreeNode(15);
+        root.right=new TreeNode(2);
 
-        root.right.left = new TreeNode(6);
-        root.right.right = new TreeNode(20);
-
-        numTrees.levleVisit(root);
+//        root.left.right = new TreeNode(5);
+//
+//        root.left.right.right = new TreeNode(15);
+//
+//
+//        root.right= new TreeNode(3);
+//        root.right.left= new TreeNode(51);
+//        root.right.left.left= new TreeNode(151);
+//
+//        root.right.right = new TreeNode(4);
+        System.out.println( numTrees.rightSideView(root));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
