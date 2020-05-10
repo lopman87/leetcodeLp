@@ -1,5 +1,8 @@
 package com.lp.leetcodeLp.list;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 编写一个程序，找到两个单链表相交的起始节点。
  *
@@ -27,6 +30,20 @@ public class GetIntersectionNode {
 
 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null)return null;
+        ListNode tmpA = headA;
+        Set<ListNode> listNodes = new HashSet<>();
+        while (tmpA != null){
+            listNodes.add(tmpA);
+            tmpA = tmpA.next;
+        }
+        ListNode tmpB = headB;
+        while (tmpB != null){
+            if (listNodes.contains(tmpB)){
+                return tmpB;
+            }
+            tmpB = tmpB.next;
+        }
         return null;
     }
 
@@ -49,7 +66,7 @@ public class GetIntersectionNode {
         startNode.next.next = head.next;
 
 
-        System.out.println(numTrees.getIntersectionNode(startNode,head));
+        System.out.println(numTrees.getIntersectionNode(startNode,head).val);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
