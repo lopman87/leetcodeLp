@@ -1,5 +1,9 @@
 package com.lp.leetcodeLp.heap;
 
+
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * 设计一个找到数据流中第K大元素的类（class）。注意是排序后的第K大元素，不是第K个不同的元素。
  *
@@ -23,12 +27,32 @@ package com.lp.leetcodeLp.heap;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class KthLargest {
+    private Integer[] queue ;
+    private int K;
 
     public KthLargest(int k, int[] nums) {
-
+        queue = new Integer[nums.length];
+        this.K = k;
+        for (int i = 0; i < nums.length; i++) {
+            queue[i] = nums[i];
+        }
     }
 
     public int add(int val) {
-        return -1;
+        queue = Arrays.copyOf(queue, queue.length+1);
+        queue[queue.length-1] = val;
+        Arrays.sort(queue,Comparator.reverseOrder());
+        return queue[K-1];
+    }
+
+    public static void main(String[] args){
+        int k = 3;
+        int[] arr = {4,5,8,2};
+        KthLargest kthLargest = new KthLargest(3, arr);
+        System.out.println(kthLargest.add(3));;// returns 4
+        System.out.println(kthLargest.add(5));// returns 5
+        System.out.println(kthLargest.add(10)); // returns 5
+        System.out.println(kthLargest.add(9));// returns 8
+        System.out.println(kthLargest.add(4));// returns 8
     }
 }
