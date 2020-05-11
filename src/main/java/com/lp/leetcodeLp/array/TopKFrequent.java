@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.array;
 
+import java.util.*;
+
 /**
  * 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
  *
@@ -29,13 +31,43 @@ package com.lp.leetcodeLp.array;
 public class TopKFrequent {
 
     public int[] topKFrequent(int[] nums, int k) {
-        return nums;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums){
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        PriorityQueue<Pair> priorityQueue = new PriorityQueue<>(new Comparator<Pair>() {
+            @Override
+            public int compare(Pair o1, Pair o2) {
+                return o2.freques - o1.freques;
+            }
+        });
+        map.forEach((kk,vv)->{
+            priorityQueue.add(new Pair(kk,vv));
+        });
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = priorityQueue.poll().val;
+        }
+        return result;
     }
 
+    private static class Pair implements Comparable<Pair>{
+        int val;
+        int freques;
+        Pair(int val , int freques){
+            this.val = val;
+            this.freques = freques;
+        }
+
+        @Override
+        public int compareTo(Pair o) {
+            return this.freques - o.freques;
+        }
+    }
 
     public static void main(String[] args){
         TopKFrequent cache = new TopKFrequent();
-        int[] nums = {1,1,1,2,2,3};
-        System.out.println(cache.topKFrequent(nums , 3));
+        int[] nums = {1,1,1,2,2,3,3,3,3};
+        System.out.println(Arrays.toString(cache.topKFrequent(nums , 2)));
     }
 }
