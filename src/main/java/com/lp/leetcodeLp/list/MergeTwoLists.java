@@ -22,8 +22,35 @@ public class MergeTwoLists {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null)return l2;
         if (l2 == null)return l1;
-
-        return null;
+        ListNode resultHeadres = new ListNode(Integer.MIN_VALUE);
+        ListNode resultHead = resultHeadres;
+        ListNode l1Head = l1;
+        ListNode l2Head = l2;
+        while (l1Head != null && l2Head !=null){
+            ListNode tmp = null;
+            if (l1Head.val < l2Head.val){
+                tmp = new ListNode(l1Head.val);
+                l1Head = l1Head.next;
+            }else{
+                tmp = new ListNode(l2Head.val);
+                l2Head = l2Head.next;
+            }
+            resultHead.next = tmp;
+            resultHead = resultHead.next;
+        }
+        while (l1Head != null){
+            ListNode tmp = new ListNode(l1Head.val);
+            resultHead.next = tmp;
+            resultHead = resultHead.next;
+            l1Head = l1Head.next;
+        }
+        while (l2Head != null){
+            ListNode tmp = new ListNode(l2Head.val);
+            resultHead.next = tmp;
+            resultHead = resultHead.next;
+            l2Head = l2Head.next;
+        }
+        return resultHeadres.next;
     }
 
 
@@ -33,7 +60,7 @@ public class MergeTwoLists {
 
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
-        head.next.next = new ListNode(3);
+        head.next.next = new ListNode(9);
 
 
 
@@ -41,7 +68,10 @@ public class MergeTwoLists {
         startHead.next = new ListNode(5);
         startHead.next.next = new ListNode(6);
 
-        System.out.println(numTrees.mergeTwoLists(head , startHead));
+        startHead.next.next.next = new ListNode(16);
+
+        ListNode result = numTrees.mergeTwoLists(head , null);
+        System.out.println(result.val);
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
