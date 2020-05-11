@@ -25,14 +25,23 @@ package com.lp.leetcodeLp.dp;
 public class MaxSubArray {
 
     public int maxSubArray(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0)return 0;
+        if (nums.length == 1)return nums[0];
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int max = dp[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(nums[i] , dp[i-1] + nums[i]);
+            max = Math.max(max, dp[i]);
+        }
+        return max;
     }
 
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         MaxSubArray numTrees = new MaxSubArray();
-        int[] A = {2,2,3,5};
+        int[] A = {-2,1,-3,4,-1,2,1,-5,4};
         System.out.println(numTrees.maxSubArray(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
