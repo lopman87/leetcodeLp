@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.dp;
 
+import java.util.*;
+
 /**
  * 定一个整数数组 A，返回 A 中最长等差子序列的长度。
  *
@@ -39,28 +41,34 @@ public class LongestArithSeqLength {
 
     public int longestArithSeqLength(int[] A) {
         if (A == null || A.length == 0)return 0;
-
+        Map<String, Integer> integerMap = new HashMap<>();
         for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < i; j++) {
-                int chazhi = A[i] - A[j];
-                int start = j-1;
-                int startVal = A[j];
-                for (; start >=0 ; start--) {
-                    if (( startVal - A[start] ) == chazhi){
-                        System.out.println(A[start]);
-                        startVal = A[start];
+            for (int j = i+1; j < A.length; j++) {
+                integerMap.put(A[i]+"-"+A[j] , 2);
+                int commonDifference = A[i] - A[j];
+                int nextVal = A[j]- commonDifference;
+                for (int k = j+1; k < A.length; k++) {
+                    if (A[k] == nextVal){
+                        Integer len = integerMap.get(A[i]+"-"+A[j]);
+                        integerMap.put(A[i]+"-"+A[j] , ++len);
+                        nextVal = A[k] - commonDifference;
                     }
                 }
             }
         }
-        return 0;
+        int max = 0;
+        Iterator<Integer> listIterator = integerMap.values().iterator();
+        while (listIterator.hasNext()){
+            max = Math.max(max , listIterator.next()) ;
+        }
+        return max;
     }
 
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         LongestArithSeqLength numTrees = new LongestArithSeqLength();
-        int[] A = {20,1,15,3,10,5,8};
+        int[] A = {0,3,6,9,12};
         System.out.println(numTrees.longestArithSeqLength(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
