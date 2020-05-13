@@ -41,29 +41,24 @@ public class LongestArithSeqLength {
 
     public int longestArithSeqLength(int[] A) {
         if (A == null || A.length == 0)return 0;
-        Map<String, Integer> integerMap = new HashMap<>();
+        HashMap<Integer, Integer>[] integerMap = new HashMap[A.length];
         for (int i = 0; i < A.length; i++) {
-            for (int j = i+1; j < A.length; j++) {
-                integerMap.put(A[i]+"-"+A[j] , 2);
-                int commonDifference = A[i] - A[j];
-                int nextVal = A[j]- commonDifference;
-                for (int k = j+1; k < A.length; k++) {
-                    if (A[k] == nextVal){
-                        Integer len = integerMap.get(A[i]+"-"+A[j]);
-                        integerMap.put(A[i]+"-"+A[j] , ++len);
-                        nextVal = A[k] - commonDifference;
-                    }
+            integerMap[i] = new HashMap<>();
+        }
+        int res=1;
+        for (int i = 1; i < A.length; i++) {
+            for (int j = 0; j <i ; j++) {
+                int diff = A[i] - A[j];
+                if (!integerMap[j].containsKey(diff)){
+                    integerMap[i].put(diff,2);
+                }else{
+                    integerMap[i].put(diff,integerMap[j].get(diff)+1);
                 }
+                res=Math.max(res,integerMap[i].get(diff));
             }
         }
-        int max = 0;
-        Iterator<Integer> listIterator = integerMap.values().iterator();
-        while (listIterator.hasNext()){
-            max = Math.max(max , listIterator.next()) ;
-        }
-        return max;
+        return res;
     }
-
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
