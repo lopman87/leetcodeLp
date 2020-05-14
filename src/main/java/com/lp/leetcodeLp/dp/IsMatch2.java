@@ -57,27 +57,26 @@ public class IsMatch2 {
         char[] charp = p.toCharArray();
 
         boolean[][] dp = new boolean[chars.length+1][charp.length+1];
-        dp[0][0]=true;
-        for (int i = 0; i < chars.length; i++) {
-            for (int j = 0; j < charp.length; j++) {
-                if (chars[i] == charp[j] || charp[j] == '.'){
-                    dp[i][j]=dp[i-1][j-1];
-                }else {
-                    
+        dp[chars.length][charp.length]=true;
+        for (int i = chars.length; i >= 0; i--) {
+            for (int j = charp.length; j >= 0; j--) {
+                if(i==chars.length&&j==charp.length) continue;
+                boolean flag =  (i < chars.length && j < charp.length) && (chars[i] == charp[j] || charp[j] == '.');
+                if ((j +1 < charp.length) &&  charp[j+1] == '*'){
+                    dp[i][j] = ( flag && dp[i+1][j] ) || dp[i][j+2];
+                }else{
+                    dp[i][j] = flag && dp[i+1][j+1];
                 }
             }
         }
-        return false;
+        return dp[0][0];
     }
 
 
     public static void main(String args[]){
-        long start = System.currentTimeMillis();
         IsMatch2 numTrees = new IsMatch2();
-        String s = "aaa";
-        String p = "a*a";
+        String s = "aab";
+        String p = "c*a*b";
         System.out.println(numTrees.isMatch(s,p));
-        long end = System.currentTimeMillis();
-        System.out.println("cost:"+(end - start) );
     }
 }
