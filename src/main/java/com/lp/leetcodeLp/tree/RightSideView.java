@@ -37,6 +37,67 @@ public class RightSideView {
         return integerList;
     }
 
+    /**
+     * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+     *
+     *  
+     *
+     * 例如:
+     * 给定二叉树: [3,9,20,null,null,15,7],
+     *
+     *     3
+     *    / \
+     *   9  20
+     *     /  \
+     *    15   7
+     * 返回其层次遍历结果：
+     *
+     * [
+     *   [3],
+     *   [9,20],
+     *   [15,7]
+     * ]
+     *  
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> StringList = new ArrayList<>();;
+        levleVisitList(root,StringList);
+        return StringList;
+    }
+
+    private void levleVisitList(TreeNode root ,List<List<Integer>> StringList){
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<TreeNode> nodeStack = new LinkedList<>();
+        nodeStack.add(root);
+        while (true){
+            while (!nodeStack.isEmpty()){
+                TreeNode topNode = nodeStack.poll();
+                nodeQueue.add(topNode);
+            }
+            List<Integer> levelStr = new ArrayList<>();
+            while (!nodeQueue.isEmpty()){
+                TreeNode inQueue = nodeQueue.poll();
+                if (inQueue == null)continue;
+                levelStr.add(inQueue.val);
+                if (inQueue.right != null){
+                    nodeStack.add(inQueue.right);
+                }
+                if (inQueue.left != null){
+                    nodeStack.add(inQueue.left);
+                }
+
+            }
+            StringList.add(levelStr);
+            if (nodeStack.isEmpty())break;
+        }
+    }
+
     private void levleVisit(TreeNode root ,List<String> StringList){
         Queue<TreeNode> nodeQueue = new LinkedList<>();
         Queue<TreeNode> nodeStack = new LinkedList<>();
