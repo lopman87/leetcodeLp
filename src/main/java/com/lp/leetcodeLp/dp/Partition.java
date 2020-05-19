@@ -82,11 +82,29 @@ public class Partition {
     }
 
 
+    public boolean isPalindrome(String s) {
+        String reverse = new StringBuffer(s).reverse().toString();
+        int size = s.length()+1;
+        boolean[][] dp = new boolean[size][size];
+        dp[0][0] = true;
+        for (int i = 1; i < size; i++) {
+            for (int j = 1; j < size; j++) {
+                if(s.charAt(i-1) == reverse.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                }else{
+                    dp[i][j] = dp[i][j-1]||dp[i-1][j];
+                }
+            }
+        }
+        return ( dp[size-1][size-1]);
+    }
+
+
     public static void main(String[] args){
 
         Partition cache = new Partition();
 
-        System.out.println(cache.longestPalindrome("aab"));
+        System.out.println(cache.isPalindrome("adssfa"));
 
     }
 }
