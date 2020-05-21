@@ -1,5 +1,6 @@
 package com.lp.leetcodeLp.backtracking;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,13 +24,23 @@ import java.util.List;
 public class LetterCasePermutation {
 
     public List<String> letterCasePermutation(String S) {
+        List<String> aa = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        int times = S.length();
+        while (times > 0){
 
-                return null;
+            --times;
+        }
+        return aa;
     }
+    private void buildStr(String S,StringBuilder stringBuilder , List<String> aa  , int times){
+        for (int i = 0; i < S.length(); i++) {
 
+        }
+    }
 
     public static void main(String[] args){
         LetterCasePermutation cache = new LetterCasePermutation();
-        System.out.println(Arrays.toString(cache.letterCasePermutation("qqe").toArray()));
+        System.out.println(Arrays.toString(cache.letterCasePermutation("ab").toArray()));
     }
 }
