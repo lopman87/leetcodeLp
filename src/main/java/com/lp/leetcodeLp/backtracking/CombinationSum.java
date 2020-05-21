@@ -1,6 +1,8 @@
 package com.lp.leetcodeLp.backtracking;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -38,8 +40,26 @@ public class CombinationSum {
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
+        Deque<Integer> stack = new ArrayDeque<>();
+        buildSum(candidates,target,stack,res );
         return res;
     }
+
+    private void buildSum (int[] candidates, int target , Deque<Integer> path, List<List<Integer>> res){
+        if (target == 0){
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < candidates.length; i++) {
+            if (target-candidates[i] < 0){
+                continue;
+            }
+            path.add(candidates[i]);
+            buildSum(candidates, target-candidates[i],path, res);
+            path.removeLast();
+        }
+    }
+
 
     public static void main(String[] args){
 
