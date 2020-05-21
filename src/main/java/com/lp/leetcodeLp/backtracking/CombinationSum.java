@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
@@ -47,7 +48,10 @@ public class CombinationSum {
 
     private void buildSum (int[] candidates, int target , Deque<Integer> path, List<List<Integer>> res){
         if (target == 0){
-            res.add(new ArrayList<>(path));
+            List<Integer> sss = new ArrayList<>(path).stream().sorted(Integer::compareTo).collect(Collectors.toList());
+            if (!res.contains(sss)){
+                res.add(sss);
+            }
             return;
         }
         for (int i = 0; i < candidates.length; i++) {
@@ -64,8 +68,8 @@ public class CombinationSum {
     public static void main(String[] args){
 
         CombinationSum cache = new CombinationSum();
-        int[] candidates = {2,3,6,7};
-        int target = 7;
+        int[] candidates = {2,3,5};
+        int target = 8;
         System.out.println(cache.combinationSum(candidates , target));
 
     }
