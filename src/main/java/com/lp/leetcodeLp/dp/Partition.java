@@ -45,21 +45,14 @@ public class Partition {
      * @param res   记录所有的结果
      */
     private void backtracking(String s, int start, int len, Deque<String> path, List<List<String>> res) {
-        if (start == len) {
+        if (start == len){
             res.add(new ArrayList<>(path));
             return;
         }
-
         for (int i = start; i < len; i++) {
-
-            // 因为截取字符串是消耗性能的，因此，采用传子串索引的方式判断一个子串是否是回文子串
-            // 不是的话，剪枝
-            if (!checkPalindrome(s, start, i)) {
-                continue;
-            }
-
-            path.addLast(s.substring(start, i + 1));
-            backtracking(s, i + 1, len, path, res);
+            if (!checkPalindrome(s, start, i))continue;
+            path.add(s.substring(start,i + 1 ));
+            backtracking(s,i + 1, len ,path,res);
             path.removeLast();
         }
     }
