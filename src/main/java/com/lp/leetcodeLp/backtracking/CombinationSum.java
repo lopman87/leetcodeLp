@@ -56,11 +56,12 @@ public class CombinationSum {
         }
         for (int i = 0; i < candidates.length; i++) {
             if (target-candidates[i] < 0){
-                continue;
+                break;
             }
             path.add(candidates[i]);
             buildSum(candidates, target-candidates[i],path, res);
-            path.removeLast();
+            int remove =  path.removeLast();
+            System.out.println("remove:"+remove);
         }
     }
 
