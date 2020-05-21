@@ -26,16 +26,19 @@ public class LetterCasePermutation {
     public List<String> letterCasePermutation(String S) {
         List<String> aa = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        int times = S.length();
-        while (times > 0){
-
-            --times;
-        }
+        buildStr(S,stringBuilder,aa,0,S.length());
         return aa;
     }
-    private void buildStr(String S,StringBuilder stringBuilder , List<String> aa  , int times){
-        for (int i = 0; i < S.length(); i++) {
-
+    private void buildStr(String S,StringBuilder stringBuilder , List<String> aa  , int times, int end){
+        if (times == end){
+            aa.add(stringBuilder.toString());
+            return;
+        }
+        for (int i = times; i < S.length(); i++) {
+            char ii = S.charAt(i);
+            stringBuilder.append(S.replace(S.charAt(i) , ii));
+            char upperII = Character.toUpperCase(ii);
+            stringBuilder.append(S.replace(S.charAt(i) , upperII));
         }
     }
 
