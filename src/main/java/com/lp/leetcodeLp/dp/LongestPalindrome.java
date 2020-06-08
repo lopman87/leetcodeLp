@@ -53,11 +53,46 @@ public class LongestPalindrome {
         }
         return target.substring(++leftOffset, rightOffset);
     }
+    public static String longestPalindrome1(String s) {
+        // 特判
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        char[] sArray = s.toCharArray();
+        int maxLen = 1;
+        int begin = 0;
+        boolean[][] paArray = new boolean[sArray.length][sArray.length];
+        for (int i = 0; i < sArray.length; i++) {
+            paArray[i][i] = true;
+        }
+        for (int j = 1; j < len; j++) {
+            for (int i = 0; i < j; i++) {
+                if (sArray[i] != sArray[j]) {
+                    paArray[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        paArray[i][j] = true;
+                    } else {
+                        paArray[i][j] = paArray[i + 1][j - 1];
+                    }
+                }
+
+                // 只要 dp[i][j] == true 成立，就表示子串 s[i..j] 是回文，此时记录回文长度和起始位置
+                if (paArray[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+
+        return s.substring(begin, begin + maxLen);
+    }
 
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        System.out.println(longestPalindrome("babad"));
+        System.out.println(longestPalindrome1("cbbd"));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
