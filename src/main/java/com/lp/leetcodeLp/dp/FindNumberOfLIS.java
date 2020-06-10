@@ -35,7 +35,7 @@ public class FindNumberOfLIS {
         int res = 1;
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]){
+                if (nums[j] < nums[i]){
                     dp[i] = Math.max(dp[i] , dp[j]+1);
                     res = Math.max(res, dp[i]);
                 }
@@ -44,11 +44,10 @@ public class FindNumberOfLIS {
         System.out.println(Arrays.toString(dp));
         return res;
     }
-    //最长的上升子序列是 [2,3,7,101]，它的长度是 4
 
     public static void main(String args[]){
         FindNumberOfLIS numTrees = new FindNumberOfLIS();
-        int[] A = {10,9,2,5,3,7,101,18};
+        int[] A = {1,3,5,4,7};
         System.out.println(numTrees.findNumberOfLIS(A ));
     }
 }
