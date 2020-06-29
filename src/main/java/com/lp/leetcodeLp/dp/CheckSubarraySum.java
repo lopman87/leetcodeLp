@@ -37,12 +37,26 @@ public class CheckSubarraySum {
         }
         return false;
     }
+    public boolean checkSubarraySum1(int[] nums, int k) {
+        for (int i = 1; i < nums.length; i++) {
+            int innerVal = nums[i];
+            for (int j = 0; j < i; j++) {
+                innerVal += nums[j];
+                if(innerVal % k == 0){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         CheckSubarraySum numTrees = new CheckSubarraySum();
-        int[] A = {5,0,0};
+        int[] A = {23,2,6,4,7};
 
-        System.out.println(numTrees.checkSubarraySum(A,0));
+        System.out.println(numTrees.checkSubarraySum1(A,88));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
