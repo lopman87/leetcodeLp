@@ -13,25 +13,27 @@ import java.util.Arrays;
 public class LengthOfLIS {
 
     public int lengthOfLIS(int[] nums) {
-
         if (nums == null || nums.length == 0){
             return 0;
         }
         if (nums.length == 1){
             return 1;
         }
-        int max = 1;
-        int[] dp = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            dp[i] = 1;
+        int[] length = new int[nums.length];
+        length[0] = 1;
+        int max = 0;
+        for (int i = 1; i < nums.length; i++) {
+            length[i] = 1;
             for (int j = 0; j < i; j++) {
-                if (nums[j]<nums[i]) {
-                    dp[i] = Math.max(dp[i], dp[j]+1);
-                    max = Math.max(dp[i], max);
+                if(nums[j] < nums[i]){
+                    length[i] = Math.max(length[i] , length[j]+1);
+                }else {
+
                 }
+                max = Math.max(length[i]  , max);
             }
         }
-        System.out.println(Arrays.toString(dp));
+        System.out.println(Arrays.toString(length));
         return max;
     }
 
@@ -39,9 +41,7 @@ public class LengthOfLIS {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         LengthOfLIS numTrees = new LengthOfLIS();
-        int[] A = {10,9,2,5,3,7,101,18};
-        //int[] A = {10,9,2,5,3,4};
-
+        int[] A = {2,2};
         System.out.println(numTrees.lengthOfLIS(A));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
