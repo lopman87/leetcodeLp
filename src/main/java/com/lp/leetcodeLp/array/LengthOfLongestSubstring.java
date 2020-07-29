@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.array;
 
+import java.util.Arrays;
+
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
  *
@@ -27,10 +29,29 @@ package com.lp.leetcodeLp.array;
 public class LengthOfLongestSubstring {
 
     public int lengthOfLongestSubstring(String s) {
+        char[] chars = s.toCharArray();
 
-        return 0;
+        int[] lll = new int[chars.length];
+        for (int i = 0; i < chars.length; i++) {
+            lll[i] = 1;
+        }
+        int max = 1;
+        for (int i = 1; i < chars.length; i++) {
+            char end = chars[i];
+            for (int j = 0; j < i; j++) {
+                if (chars[j] != end){
+                    lll[i] = Math.max( lll[i] , (lll[j] +1) );
+                    max = Math.max( max ,  lll[i] );
+                }else {
+                    break;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(lll));
+        return max;
     }
     public static void main(String[] a){
-
+        LengthOfLongestSubstring lengthOfLongestSubstring = new LengthOfLongestSubstring();
+        System.out.println(lengthOfLongestSubstring.lengthOfLongestSubstring("pwwkew"));
     }
 }
