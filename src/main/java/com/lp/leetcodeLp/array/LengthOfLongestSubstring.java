@@ -1,6 +1,6 @@
 package com.lp.leetcodeLp.array;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
@@ -28,7 +28,7 @@ import java.util.Arrays;
  */
 public class LengthOfLongestSubstring {
 
-    public int lengthOfLongestSubstring(String s) {
+    public int lengthOfLongestSubstring1(String s) {
         char[] chars = s.toCharArray();
 
         int[] lll = new int[chars.length];
@@ -50,6 +50,33 @@ public class LengthOfLongestSubstring {
         System.out.println(Arrays.toString(lll));
         return max;
     }
+
+
+    public int lengthOfLongestSubstring(String s) {
+        char[] chars = s.toCharArray();
+        int max = 0;
+        Map<Character, Integer> windows = new HashMap<>();
+        for (int i = 0; i < chars.length; i++) {
+            if (!windows.containsKey(chars[i])){
+                windows.put(chars[i], i);
+                max = Math.max(max , windows.size());
+            }else{
+                Integer index = windows.get(chars[i]);
+                Iterator<Character> iterator = windows.keySet().iterator();
+                while (iterator.hasNext()){
+                    Character characterIntegerEntry = iterator.next();
+                    Integer aa = windows.get(characterIntegerEntry);
+                    if (aa <= index){
+                        iterator.remove();
+                        max = Math.max(max , windows.size());
+                    }
+                }
+            }
+        }
+
+        return max;
+    }
+
     public static void main(String[] a){
         LengthOfLongestSubstring lengthOfLongestSubstring = new LengthOfLongestSubstring();
         System.out.println(lengthOfLongestSubstring.lengthOfLongestSubstring("pwwkew"));
