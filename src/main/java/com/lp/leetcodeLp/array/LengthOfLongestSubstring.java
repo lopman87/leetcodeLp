@@ -66,7 +66,7 @@ public class LengthOfLongestSubstring {
                 while (iterator.hasNext()){
                     Character characterIntegerEntry = iterator.next();
                     Integer aa = windows.get(characterIntegerEntry);
-                    if (aa <= index){
+                    if (aa < index){
                         iterator.remove();
                         max = Math.max(max , windows.size());
                     }
@@ -79,6 +79,6 @@ public class LengthOfLongestSubstring {
 
     public static void main(String[] a){
         LengthOfLongestSubstring lengthOfLongestSubstring = new LengthOfLongestSubstring();
-        System.out.println(lengthOfLongestSubstring.lengthOfLongestSubstring("pwwkew"));
+        System.out.println(lengthOfLongestSubstring.lengthOfLongestSubstring("aab"));
     }
 }
