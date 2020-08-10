@@ -22,6 +22,19 @@ public class RotateRight {
     }
 
 
+    private ListNode rotateRight(ListNode head) {
+
+        ListNode tmpHead = new ListNode(Integer.MAX_VALUE);
+        tmpHead.next = head;
+        while (tmpHead.next != null){
+
+
+            tmpHead = tmpHead.next;
+        }
+        return null;
+    }
+
+
     public static void main(String args[]){
         long start = System.currentTimeMillis();
         ReverseList numTrees = new ReverseList();
