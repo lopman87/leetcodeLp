@@ -60,7 +60,7 @@ public class RotateRight {
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
 
-        head.next.next.next.next.next = new ListNode(6);
+        //head.next.next.next.next.next = new ListNode(6);
 
 
         ListNode result = numTrees.rotateRight(head ,2);
