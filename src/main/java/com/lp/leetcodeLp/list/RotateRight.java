@@ -3,6 +3,10 @@ package com.lp.leetcodeLp.list;
 public class RotateRight {
 
     public ListNode rotateRight(ListNode head, int k) {
+
+        if (head == null || head.next == null){
+            return head;
+        }
         int length = 0;
         ListNode tmpHead = head;
         while (tmpHead != null){
