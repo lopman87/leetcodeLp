@@ -8,7 +8,8 @@ public class RotateRight {
             return head;
         }
         int length = 0;
-        ListNode tmpHead = head;
+        ListNode tmpHead = new ListNode(Integer.MAX_VALUE);
+        tmpHead = head;
         while (tmpHead != null){
             length ++;
             tmpHead = tmpHead.next;
@@ -20,28 +21,37 @@ public class RotateRight {
         if (realK == 0){
             return head;
         }
-
-
-        return null;
+        tmpHead = head;
+        int index = realK;
+        while (index > 0){
+            tmpHead = rotateRight(tmpHead);
+            index--;
+        }
+        return tmpHead;
     }
 
 
     private ListNode rotateRight(ListNode head) {
-
+        ListNode tmpHeadResult = new ListNode(Integer.MAX_VALUE);
         ListNode tmpHead = new ListNode(Integer.MAX_VALUE);
         tmpHead.next = head;
+        tmpHeadResult.next = head;
         while (tmpHead.next != null){
-
-
-            tmpHead = tmpHead.next;
+            if (tmpHead.next.next == null){
+                tmpHeadResult.val = tmpHead.next.val;
+                tmpHead.next = null;
+                break;
+            }else{
+                tmpHead = tmpHead.next;
+            }
         }
-        return null;
+        return tmpHeadResult;
     }
 
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        ReverseList numTrees = new ReverseList();
+        RotateRight numTrees = new RotateRight();
 
         ListNode head = new ListNode(1);
 
@@ -52,7 +62,14 @@ public class RotateRight {
 
         head.next.next.next.next.next = new ListNode(6);
 
-        System.out.println(numTrees.reverseList(head).next.val);
+
+        ListNode result = numTrees.rotateRight(head ,2);
+
+        while (result != null){
+            System.out.println(result.val);
+            result = result.next;
+        }
+
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
     }
