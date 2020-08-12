@@ -29,31 +29,20 @@ import java.util.stream.IntStream;
  */
 public class Merge {
 
+
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        for (int i = 0; i < n; i++) {
-            int element2 = nums2[i];
-            nums1[nums1.length -1 -i] = element2;
+
+        int[] nums11 = Arrays.copyOfRange(nums1 ,0,m );
+
+        int[] nums22 = Arrays.copyOfRange(nums2 ,0,n );
+
+        int[] num1122 = combineInt(nums11, nums22);
+
+        Arrays.sort(num1122);
+
+        for (int i = 0; i < num1122.length; i++) {
+            nums1[i] = num1122[i];
         }
-
-        Comparator<Integer> employeeNameComparator = new Comparator<Integer>() {
-            @Override
-            public int compare(Integer e1, Integer e2) {
-                if (e1 != 0 && e2 != 0) {
-                    return e1.compareTo(e2);
-                } else {
-                    return e1 == 0 ? 1 : -1;
-                }
-            }
-        };
-
-        Integer[] ever = IntStream.of( nums1 ).boxed().toArray( Integer[]::new );
-
-        Arrays.sort(ever, employeeNameComparator);
-
-        for (int i = 0; i < ever.length; i++) {
-            nums1[i] = ever[i];
-        }
-
     }
 
     public static void main(String[] args){
@@ -65,5 +54,13 @@ public class Merge {
         System.out.println(Arrays.toString(nums1));
 
         String pre = "[-1,0,0,1,2,2,3,3,3]";
+    }
+
+    private static int[] combineInt(int[] a, int[] b){
+        int length = a.length + b.length;
+        int[] result = new int[length];
+        System.arraycopy(a, 0, result, 0, a.length);
+        System.arraycopy(b, 0, result, a.length, b.length);
+        return result;
     }
 }
