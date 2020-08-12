@@ -32,7 +32,7 @@ public class LongestConsecutive {
         int max = 1;
         int realMax = 1;
         for (int i = 1; i < nums.length; i++) {
-            if (nums[i] - nums[i-1] == 1){
+            if (Math.abs( nums[i] - nums[i-1]) == 1){
                 max++;
                 realMax = Math.max(realMax , max);
             }else{
@@ -44,7 +44,7 @@ public class LongestConsecutive {
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        int[] aaa  ={100, 4, 200, 1, 3, 2};
+        int[] aaa  ={0,0,-1};
         LongestConsecutive numTrees = new LongestConsecutive();
         System.out.println(numTrees.longestConsecutive(aaa));
         long end = System.currentTimeMillis();
