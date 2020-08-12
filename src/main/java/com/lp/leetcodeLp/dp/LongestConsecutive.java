@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.dp;
 
+import java.util.Arrays;
+
 /**
  * 给定一个未排序的整数数组，找出最长连续序列的长度。
  *
@@ -18,7 +20,26 @@ package com.lp.leetcodeLp.dp;
 public class LongestConsecutive {
     public int longestConsecutive(int[] nums) {
 
-        return 0;
+        if (nums == null)return 0;
+        if (nums.length == 0)return 0;
+        if (nums.length == 1)return 1;
+        if (nums.length == 2){
+            if (Math.abs( nums[0] - nums[1]) == 1)return 2;
+            return 1;
+        }
+
+        Arrays.sort(nums);
+        int max = 1;
+        int realMax = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] - nums[i-1] == 1){
+                max++;
+                realMax = Math.max(realMax , max);
+            }else{
+                max = 1;
+            }
+        }
+        return realMax;
     }
 
     public static void main(String args[]){
