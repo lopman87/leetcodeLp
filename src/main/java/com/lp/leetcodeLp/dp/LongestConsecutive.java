@@ -29,10 +29,19 @@ public class LongestConsecutive {
         }
 
         Arrays.sort(nums);
+
+        System.out.println(Arrays.toString(nums));
+
+
+        nums = Arrays.stream(nums).distinct().toArray();
+
+
+        System.out.println(Arrays.toString(nums));
+
         int max = 1;
         int realMax = 1;
         for (int i = 1; i < nums.length; i++) {
-            if (Math.abs( nums[i] - nums[i-1]) == 1){
+            if (Math.abs( nums[i] - nums[i-1]) <= 1){
                 max++;
                 realMax = Math.max(realMax , max);
             }else{
@@ -44,7 +53,7 @@ public class LongestConsecutive {
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        int[] aaa  ={0,0,-1};
+        int[] aaa  ={1,2,0,1};
         LongestConsecutive numTrees = new LongestConsecutive();
         System.out.println(numTrees.longestConsecutive(aaa));
         long end = System.currentTimeMillis();
