@@ -1,5 +1,7 @@
 package com.lp.leetcodeLp.tree;
 
+import java.util.*;
+
 /**
  * 在二叉树中，根节点位于深度 0 处，每个深度为 k 的节点的子节点位于深度 k+1 处。
  *
@@ -38,11 +40,68 @@ public class IsCousins {
 
     public boolean isCousins(TreeNode root, int x, int y) {
 
-
-
-        return false;
+        if (isBro(root , x , y)){
+            return false;
+        }
+        int xx = maxDepth(root  ,x);
+        int yy = maxDepth(root  ,y);
+        return xx == yy;
     }
 
+    private boolean isBro(TreeNode root, int x, int y) {
+        if (root == null){
+            return false;
+        }
+        if (root.left != null && root.right != null){
+            if ( (root.left.val == x && root.right.val == y)  || (root.right.val == x && root.left.val == y)  ){
+                return true;
+            }
+        }
+        return isBro(root.left , x ,y) || isBro(root.right , x ,y);
+    }
+
+    private int maxDepth (TreeNode root , int val){
+        ArrayList<ArrayList<Integer>> arrayLists = levelOrderVisit(root);
+        for (int i = 0; i < arrayLists.size(); i++) {
+            ArrayList<Integer> aa = arrayLists.get(i);
+            for (Integer aaaa :aa) {
+                if (aaaa == val){
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
+
+    private ArrayList<ArrayList<Integer>> levelOrderVisit(TreeNode root) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if (root == null) {
+            return result;
+        }
+
+        //Use a queue to list elements: each row
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            int size = queue.size();//Limit the size, since the queue is increasing
+            for (int i = 0; i < size; i++) {
+                TreeNode levelNode = queue.poll();
+                list.add(levelNode.val);//Add all the values from this current level
+                if (levelNode.left != null) {
+                    queue.offer(levelNode.left);
+                }
+                if (levelNode.right != null) {
+                    queue.offer(levelNode.right);
+                }
+            }
+            result.add(list);
+        }//while
+
+        return result;
+    }
 
     public static void main(String args[]){
         long start = System.currentTimeMillis();
@@ -50,11 +109,13 @@ public class IsCousins {
 
         TreeNode root = new TreeNode(1);
         root.left=new TreeNode(2);
-        root.left.right=new TreeNode(21);
         root.right= new TreeNode(3);
 
 
-        TreeNode root1 = new TreeNode(2);
+        root.left.right=new TreeNode(4);
+        root.right.right=new TreeNode(5);
+
+
         System.out.println(numTrees.isCousins(root ,5, 4));
         long end = System.currentTimeMillis();
         System.out.println("cost:"+(end - start) );
