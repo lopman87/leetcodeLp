@@ -1,12 +1,35 @@
 package com.lp.leetcodeLp.tree;
 
-import com.lp.leetcodeLp.list.ListNode;
+
+import java.util.Stack;
 
 public class SumNumbers {
 
     public int sumNumbers(TreeNode root) {
 
         return 0;
+    }
+
+
+    public void depthFirstSearch(TreeNode root) {
+        if(root == null) {
+            return;
+        }
+
+        Stack<TreeNode> nodeStack = new Stack<TreeNode>();
+        nodeStack.push(root);
+
+        while(!nodeStack.isEmpty()) {
+            TreeNode node = nodeStack.pop();
+            System.out.print(node.val + " ");
+
+            if(node.right != null) {
+                nodeStack.push(node.right);
+            }
+            if(node.left != null) {
+                nodeStack.push(node.left);
+            }
+        }
     }
 
     public static void main(String[] args){
