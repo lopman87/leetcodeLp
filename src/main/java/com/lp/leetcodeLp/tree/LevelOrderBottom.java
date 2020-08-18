@@ -27,38 +27,40 @@ import java.util.*;
  */
 public class LevelOrderBottom {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> arr = new ArrayList<>();
-
-        printByLevel(root);
-
-
-        return arr;
+        if (root == null){
+            return new ArrayList<>();
+        }
+        List<List<Integer>> aa = printByLevel(root);
+        Collections.reverse(aa);
+        return aa;
     }
 
-    private void printByLevel(TreeNode root){
+    private List<List<Integer>> printByLevel(TreeNode root){
 
-        List<TreeNode> visitList = new ArrayList<>();
+        List<List<Integer>> arr = new ArrayList<>();
 
         Queue<TreeNode> treeNodeQueue = new LinkedList<>();
         treeNodeQueue.add(root);
         while (!treeNodeQueue.isEmpty()){
-            TreeNode treeNode = treeNodeQueue.poll();
 
-            visitList.add(treeNode);
+            List<Integer> list = new ArrayList<>();
 
-            if (treeNode.left != null){
-                treeNodeQueue.add(treeNode.left);
+            int size = treeNodeQueue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode treeNode = treeNodeQueue.poll();
+
+                list.add(treeNode.val);
+
+                if (treeNode.left != null){
+                    treeNodeQueue.add(treeNode.left);
+                }
+                if (treeNode.right != null){
+                    treeNodeQueue.add(treeNode.right);
+                }
             }
-            if (treeNode.right != null){
-                treeNodeQueue.add(treeNode.right);
-            }
-            System.out.println(visitList.size());
-            System.out.println("-----------------------------");
+            arr.add(list);
         }
-
-        for (TreeNode tree:visitList) {
-            System.out.println(tree.val);
-        }
+        return arr;
     }
 
 
