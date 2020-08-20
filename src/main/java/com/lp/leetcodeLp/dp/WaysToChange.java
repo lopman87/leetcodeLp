@@ -45,6 +45,6 @@ public class WaysToChange {
 
     public static void main(String args[]){
         WaysToChange numTrees = new WaysToChange();
-        System.out.println(numTrees.waysToChange(10));
+        System.out.println(numTrees.waysToChange(9));
     }
 }
