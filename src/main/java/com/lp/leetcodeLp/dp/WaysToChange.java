@@ -28,23 +28,29 @@ public class WaysToChange {
 
 
     public int waysToChange(int n) {
+        int[] coins = new int[]{1, 2, 5};
+        return 0;
+    }
+
+    public int coinChange(int[] coins, int n) {
         int[] dp = new int[n + 1];
-        dp[0] = 1;
-        int[] coins = new int[]{1,5,10,25};
+        dp[0] = 0;
         for(int coin : coins) {
-            for(int i = coin; i <= n; i++) {
-                dp[i] = (dp[i] + dp[i - coin]) % 1000000007;
+            for(int i = 1; i <= n; i++) {
+                if(coin <= i ){
+                    dp[i] = Math.min(dp[i-1] , dp[i-coin])+1;
+                }
             }
         }
-
         return dp[n];
-
     }
 
 
 
     public static void main(String args[]){
         WaysToChange numTrees = new WaysToChange();
-        System.out.println(numTrees.waysToChange(9));
+        int[] coins = new int[]{1, 2, 5};
+        int[] coins1 = new int[]{2};
+        System.out.println(numTrees.coinChange(coins1,3));
     }
 }
