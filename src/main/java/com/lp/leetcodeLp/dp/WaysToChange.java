@@ -32,17 +32,24 @@ public class WaysToChange {
         return 0;
     }
 
-    public int coinChange(int[] coins, int n) {
-        int[] dp = new int[n + 1];
+    public int coinChange(int[] coins, int amount) {
+        if(coins.length == 0){
+            return -1;
+        }
+        //初始化dp数据
+        int[] dp = new int[amount+1];
+        for(int i = 0; i<dp.length; i++) dp[i] = 99999;
         dp[0] = 0;
+
         for(int coin : coins) {
-            for(int i = 1; i <= n; i++) {
+            for(int i = 1; i <= amount; i++) {
                 if(coin <= i ){
-                    dp[i] = Math.min(dp[i-1] , dp[i-coin])+1;
+                    dp[i] = Math.min(dp[i] , dp[i-coin]+1);
                 }
             }
         }
-        return dp[n];
+        int result = dp[amount] == 99999 ? -1:dp[amount];
+        return result;
     }
 
 
