@@ -40,16 +40,14 @@ public class WaysToChange {
         int[] dp = new int[amount+1];
         for(int i = 0; i<dp.length; i++) dp[i] = 99999;
         dp[0] = 0;
-
-        for(int coin : coins) {
-            for(int i = 1; i <= amount; i++) {
-                if(coin <= i ){
-                    dp[i] = Math.min(dp[i] , dp[i-coin]+1);
+        for (int coin:coins) {
+            for (int i = 1; i < dp.length; i++) {
+                if (i >= coin){
+                    dp[i] = Math.min(dp[i - coin] +1 , dp[i] );
                 }
             }
         }
-        int result = dp[amount] == 99999 ? -1:dp[amount];
-        return result;
+        return dp[amount] == 99999 ? -1: dp[amount];
     }
 
 
@@ -58,6 +56,6 @@ public class WaysToChange {
         WaysToChange numTrees = new WaysToChange();
         int[] coins = new int[]{1, 2, 5};
         int[] coins1 = new int[]{2};
-        System.out.println(numTrees.coinChange(coins1,3));
+        System.out.println(numTrees.coinChange(coins,3));
     }
 }
