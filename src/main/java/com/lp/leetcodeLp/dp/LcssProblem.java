@@ -1,5 +1,8 @@
 package com.lp.leetcodeLp.dp;
 
+/**
+ * 最大公共子字符串
+ */
 public class LcssProblem {
     public void Lcss(char str1[],char str2[]){
         int dp[][]=new int[str1.length][str2.length];
