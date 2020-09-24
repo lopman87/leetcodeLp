@@ -39,14 +39,42 @@ package com.lp.leetcodeLp.dp;
  */
 public class SuperEggDrop {
 
-    public int superEggDrop(int K, int N) {
+    int calcF(int K, int T)
+    {
+        if (T == 1 || K == 1) return T + 1;
+        return calcF(K - 1, T - 1) + calcF(K, T - 1);
+    }
 
-        return 0;
+    /**
+     *
+     * 状态转移方程应该如下： f{n, m} = min(1 + max (f{i - 1, m - 1}, f{n - i, m}) ) 其中： i的范围为(1, n), f{i, 1} = 1。
+     * @param K 鸡蛋数目
+     * @param N 楼层数
+     * @return
+     */
+    int superEggDrop(int K, int N)
+    {
+        int T = 1;
+        int[][] dp = new int[K+1][N+1];
+        //当只有一层楼
+        for (int i = 1; i < dp.length; i++) {
+            dp[i][1] = 1;
+        }
+        //当有一个鸡蛋时候
+        for (int i = 1; i < dp[1].length; i++) {
+            dp[1][i] = i;
+        }
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[i].length; j++) {
+
+            }
+        }
+        return T;
     }
 
 
     public static void main(String args[]){
-        int K = 2, N = 6;
+        int K = 3, N = 14;
         long start = System.currentTimeMillis();
         SuperEggDrop numTrees = new SuperEggDrop();
         System.out.println(numTrees.superEggDrop(K,N));
