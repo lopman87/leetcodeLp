@@ -54,7 +54,7 @@ public class SuperEggDrop {
      */
     int superEggDrop(int K, int N)
     {
-        int T = 1;
+        int INF = 0x3f3f3f3f;
         int[][] dp = new int[K+1][N+1];
         //当只有一层楼
         for (int i = 1; i < dp.length; i++) {
@@ -64,17 +64,22 @@ public class SuperEggDrop {
         for (int i = 1; i < dp[1].length; i++) {
             dp[1][i] = i;
         }
-        for (int i = 1; i < dp.length; i++) {
-            for (int j = 1; j < dp[i].length; j++) {
-
+        for(int i = 2; i <= N; i++){
+            for(int k = 2; k <= K; k++){
+                dp[k][i] = INF;
+                for(int j = 2; j <= i; j++){
+                    dp[k][i] = Math.min( dp[k][i],
+                            Math.max(dp[k - 1][j - 1], dp[k][i - j]) + 1);
+                }
             }
         }
-        return T;
+
+        return dp[K][N];
     }
 
 
     public static void main(String args[]){
-        int K = 3, N = 14;
+        int K = 8, N = 10000;
         long start = System.currentTimeMillis();
         SuperEggDrop numTrees = new SuperEggDrop();
         System.out.println(numTrees.superEggDrop(K,N));
