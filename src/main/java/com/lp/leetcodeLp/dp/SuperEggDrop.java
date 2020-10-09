@@ -79,7 +79,7 @@ public class SuperEggDrop {
 
 
     public static void main(String args[]){
-        int K = 8, N = 10000;
+        int K = 2, N = 6;
         long start = System.currentTimeMillis();
         SuperEggDrop numTrees = new SuperEggDrop();
         System.out.println(numTrees.superEggDrop(K,N));
