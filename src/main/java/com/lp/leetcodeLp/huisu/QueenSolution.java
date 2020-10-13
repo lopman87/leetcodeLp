@@ -11,14 +11,11 @@ public class QueenSolution {
     //模拟一个8X8的棋盘，0代表没有放置，1代表放置了一个皇后
     private int[][] board = new int[4][4];
 
-    //解法的数量
-    private int total = 0;
     //放置第K个皇后
     public void putQueen(int k) {
         int max = board.length;
         if (k == max){
             print(board);
-            ++total;
             return;
         }
         for (int j = 0; j < board[k].length ; j++) {
@@ -66,7 +63,6 @@ public class QueenSolution {
     public static void main(String[] args) {
         QueenSolution solution = new QueenSolution();
         solution.putQueen(0);
-        System.out.print(solution.total);
     }
     private void print(int[][] board){
         //第一个 for 循环语句表示以行进行循环，第二个 for 循环语句表示以列进行循环，这样就实现了获取二维数组中每个元素的值的功能
