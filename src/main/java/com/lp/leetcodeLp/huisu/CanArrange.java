@@ -1,11 +1,23 @@
 package com.lp.leetcodeLp.huisu;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class CanArrange {
 
     public boolean canArrange(int[] arr, int k) {
-
+        Set<Integer> used = new HashSet<>();
+        for (int i = 0; i < arr.length && !used.contains(i); i++) {
+            int pair = other(arr , i,k);
+            if (pair != -1){
+                used.add(i);
+                used.add(pair);
+            }
+        }
+        if (used.size() == arr.length)return true;
         return false;
     }
+
 
     private int other(int[] arr,int index, int k){
         for (int i = 0; i < arr.length && i != index; i++) {
@@ -17,9 +29,9 @@ public class CanArrange {
     }
 
     public static void main(String[] args) {
-        int[]arr = {1,2,3,4,5,10,6,7,8,9};
-        int k = 5;
+        int[]arr = {-4,-7,5,2,9,1,10,4,-8,-3};
+        int k = 3;
         CanArrange solution = new CanArrange();
-        solution.canArrange(arr, k);
+        System.out.println(solution.canArrange(arr, k));
     }
 }
