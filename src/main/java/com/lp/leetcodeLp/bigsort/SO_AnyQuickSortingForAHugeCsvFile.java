@@ -14,7 +14,7 @@ public class SO_AnyQuickSortingForAHugeCsvFile {
     public static void main(String[] args) throws IOException {
         System.out.println("creating input data");
         long t = System.currentTimeMillis();
-        File input = new File("target/input.csv");
+        File input = new File("/Users/penglong/Desktop/input.csv");
         try (PrintStream p = new PrintStream(
                 new BufferedOutputStream(new FileOutputStream(input)))) {
             Random r = new Random();
@@ -34,7 +34,7 @@ public class SO_AnyQuickSortingForAHugeCsvFile {
                 .comparator((x, y) -> Integer.compare(Integer.parseInt(x.get(10)),
                         Integer.parseInt(y.get(10)))) //
                 .input(input) //
-                .output(new File("target/output.txt")) //
+                .output(new File("/Users/penglong/Desktop/output.txt")) //
                 .maxItemsPerFile(20000) //
                 .loggerStdOut() //
                 .sort();
